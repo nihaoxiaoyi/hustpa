@@ -41,7 +41,7 @@ void wp_dispaly(){
       printf("%-4d %-34s %-32d\n", node->NO,node->expr,node->value);
     }
   }else{
-    printf("No watchpoints were added.");
+    printf("No watchpoints were added.\n");
   }
 }
 

@@ -91,6 +91,22 @@ static int cmd_si(char *args){
     return 0;
   }
 
+/**
+  * Calculate the value of the expression
+  * p expr
+  */
+  static int cmd_p(char *args){
+    bool flag = true;
+    int ret = 0;
+    uint32_t value = expr(args,flag);
+    if(flag==true){
+      printf("%d\n",value);
+    }else{
+      printf("expression error\n");
+      ret = -1;
+    }
+    return ret;
+  }
 
 /*End*/
 
@@ -100,13 +116,14 @@ static struct {
   int (*handler) (char *);
 } cmd_table [] = {
   { "help", "Display informations about all supported commands", cmd_help },
-  { "c", "Continue the execution of the program", cmd_c },
-  { "q", "Exit NEMU", cmd_q },
+  { "c   ", "Continue the execution of the program", cmd_c },
+  { "q   ", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
   /*Start*/
-  { "si", "Single step execution ( si [N] )", cmd_si},
+  { "si  ", "Single step execution ( si [N] )", cmd_si},
   { "info", "Print information of registers or watchpoints ( info r || w )", cmd_info},
+  { "p   ", "Evaluate expression ( p expr )"}
   /*End*/
 };
 

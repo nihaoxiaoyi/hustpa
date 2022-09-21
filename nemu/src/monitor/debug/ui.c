@@ -16,14 +16,14 @@ void cpu_exec(uint64_t);
 // (2) display ISA reg
 void isa_reg_display();
 
-// (3) print watchpoints
-void print_wp();
+// (3) display watchpoints
+void wp_dispaly();
 
 // (4) Clear the NO-th Watchpoint
-void free_wp(int NO);
+// void free_wp(int NO);
 
 // (5) Create watchpoint
-WP* new_wp();
+// WP* new_wp();
 
 /*End*/
 
@@ -84,7 +84,7 @@ static int cmd_si(char *args){
     if(args!=NULL){
       switch(args[0]){
         case 'r':isa_reg_display();break;
-        case 'w':print_wp();break;
+        case 'w':wp_dispaly();break;
         default:break;
       }
     }

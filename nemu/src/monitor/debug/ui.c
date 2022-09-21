@@ -7,7 +7,25 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+/***Mycode:External function***/
+/*Start*/
+
+// (1) CPU execution
 void cpu_exec(uint64_t);
+
+// (2) display ISA reg
+void isa_reg_display();
+
+// (3) print watchpoints
+void print_wp();
+
+// (4) Clear the NO-th Watchpoint
+void free_wp(int NO);
+
+// (5) Create watchpoint
+WP* new_wp();
+
+/*End*/
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -38,7 +56,7 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
-/* TODO: Add more commands code*/
+/* Mycode: Add more commands code*/
 /*Start*/
 
 /**
@@ -56,6 +74,24 @@ static int cmd_si(char *args){
   return 0;
 }
 
+/**
+  * 1、Print register status
+  * 2、Print Watchpoint Information
+  * info SUBCMD
+  * eg: info r or info w
+  */ 
+  static int cmd_info(char *args){
+    if(args!=NULL){
+      switch(args[0]){
+        case 'r':isa_reg_display();break;
+        case 'w':print_wp();break;
+        default:break;
+      }
+    }
+    return 0;
+  }
+
+
 /*End*/
 
 static struct {
@@ -69,8 +105,8 @@ static struct {
 
   /* TODO: Add more commands */
   /*Start*/
-  { "si", "Single step execution", cmd_si},
-
+  { "si [N]", "Single step execution", cmd_si},
+  { "info r||w", "Print details of registers or watchpoints", cmd_info},
   /*End*/
 };
 

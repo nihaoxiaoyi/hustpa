@@ -116,14 +116,14 @@ static struct {
   int (*handler) (char *);
 } cmd_table [] = {
   { "help", "Display informations about all supported commands", cmd_help },
-  { "c   ", "Continue the execution of the program", cmd_c },
-  { "q   ", "Exit NEMU", cmd_q },
+  { "c", "Continue the execution of the program", cmd_c },
+  { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
   /*Start*/
-  { "si  ", "Single step execution ( si [N] )", cmd_si},
+  { "si", "Single step execution ( si [N] )", cmd_si},
   { "info", "Print information of registers or watchpoints ( info r || w )", cmd_info},
-  { "p   ", "Evaluate expression ( p expr )"}
+  { "p", "Evaluate expression ( p expr )"}
   /*End*/
 };
 

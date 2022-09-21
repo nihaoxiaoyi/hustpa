@@ -105,8 +105,8 @@ static struct {
 
   /* TODO: Add more commands */
   /*Start*/
-  { "si [N]", "Single step execution", cmd_si},
-  { "info r||w", "Print details of registers or watchpoints", cmd_info},
+  { "si", "Single step execution ( si [N] )", cmd_si},
+  { "info", "Print information of registers or watchpoints ( info r || w )", cmd_info},
   /*End*/
 };
 

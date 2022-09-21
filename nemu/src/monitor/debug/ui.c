@@ -98,7 +98,7 @@ static int cmd_si(char *args){
   static int cmd_p(char *args){
     bool flag = true;
     int ret = 0;
-    uint32_t value = expr(args,flag);
+    uint32_t value = expr(args, &flag);
     if(flag==true){
       printf("%d\n",value);
     }else{

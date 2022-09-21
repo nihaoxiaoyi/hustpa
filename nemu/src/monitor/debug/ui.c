@@ -38,6 +38,26 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+/* TODO: Add more commands code*/
+/*Start*/
+
+/**
+  * let programe execute N instructions and then stop
+  * When N is not given, it defaults to 1
+  * si [N]
+  * eg: si 10
+  */ 
+static int cmd_si(char *args){
+  int n = 1;  // defaults 1
+  if(args!=NULL){
+    n = atoi(args);
+  }
+  cpu_exec(n);
+  return 0;
+}
+
+/*End*/
+
 static struct {
   char *name;
   char *description;
@@ -48,7 +68,10 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
+  /*Start*/
+  { "si", "Single step execution", cmd_si},
 
+  /*End*/
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))

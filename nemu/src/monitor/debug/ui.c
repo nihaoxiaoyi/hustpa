@@ -123,7 +123,7 @@ static struct {
   /*Start*/
   { "si", "Single step execution ( si [N] )", cmd_si},
   { "info", "Print information of registers or watchpoints ( info r || w )", cmd_info},
-  { "p", "Evaluate expression ( p expr )"}
+  { "p", "Evaluate expression ( p expr )", cmd_p}
   /*End*/
 };
 

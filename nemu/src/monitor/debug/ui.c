@@ -154,10 +154,10 @@ static int cmd_d(char *args){
   }
   wp = delete_wp(NO);
   if(wp==NULL){
-    printf("watchpoint %d delete failed\n");
+    printf("watchpoint %d delete failed\n", NO);
   }
   else{
-    printf("watchpoint %d %s %d delete success\n",wp->NO,wp->expr,wp->value);
+    printf("watchpoint %d %s %d delete success\n", NO, wp->expr, wp->value);
   }
   return 0;
 }

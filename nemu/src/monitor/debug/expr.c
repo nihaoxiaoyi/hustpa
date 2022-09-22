@@ -40,8 +40,8 @@ static struct rule {
   {"\\/", '/'},         // div
   {"\\(", '('},         // LP
   {"\\)", ')'},         // RP
-  {"[0-9]+", TK_INT},   // INT
   {"0[Xx][0-9A-Fa-f]+",TK_HEX},   // HEX
+  {"[0-9]+", TK_INT},   // INT
   {"!=", TK_NOTEQ},     // not equal
   {"&&", TK_AND},       // and
   {"||", TK_OR},          // or

@@ -202,7 +202,7 @@ bool check_parentheses(int p,int q){
       else if(tokens[i].type==')' && lp>rp ){
         rp++;
       }
-      else{
+      else if(tokens[i].type==')' && rp>=rp){
         return false;
       }
     }

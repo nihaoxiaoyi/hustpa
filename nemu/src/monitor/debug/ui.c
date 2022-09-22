@@ -73,7 +73,6 @@ static int cmd_si(char *args){
   int n = 1;  // defaults 1
   if(args!=NULL){
     n = atoi(args);
-    printf("%d\n",n);
   }
   cpu_exec(n);
   return 0;
@@ -115,10 +114,15 @@ static int cmd_si(char *args){
       }else{
         printf("expression error\n");
       }
+    }else{
+      error_message("p");
     }
     return 0;
   }
 
+
+
+  
 /*End*/
 
 static struct {

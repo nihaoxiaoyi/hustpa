@@ -156,7 +156,23 @@ static bool make_token(char *e) {
 /* Start */
 void printTokens(){
   for(int i=0; i<nr_token; i++){
-    printf("%-5s %-10s\n",tokens[i].type,tokens[i].str);
+    switch(tokens[i].type){
+      case TK_NOTYPE:break;
+      case '+' : printf("%-10c",'+'); break;
+      case '-' : printf("%-10c",'-'); break;
+      case '*' : printf("%-10c",'*'); break;
+      case '/' : printf("%-10c",'/'); break;
+      case '(' : printf("%-10c",'('); break;
+      case ')' : printf("%-10c",')'); break;
+      case TK_EQ : printf("%-10s","TK_EQ"); break;
+      case TK_NOTEQ : printf("%-10s","TK_NOTEQ"); break;
+      case TK_AND : printf("%-10s","TK_AND"); break;
+      case TK_OR :  printf("%-10s","TK_OR"); break;
+      case TK_INT : printf("%-10s","TK_INT"); printf("%-10s\n",tokens[i].str); break;
+      case TK_HEX : printf("%-10s","TK_HEX"); printf("%-10s\n",tokens[i].str); break;
+      case TK_REG : printf("%-10s","TK_REG"); printf("%-10s\n",tokens[i].str); break;
+      default: printf("error");return;
+    }
   }
 }
 

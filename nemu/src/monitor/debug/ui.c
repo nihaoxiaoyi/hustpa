@@ -23,7 +23,7 @@ void wp_dispaly();
 // void free_wp(int NO);
 
 // (5) Create watchpoint
-WP* new_wp(uint32_t value, char *expr);
+WP* create_wp(uint32_t value, char *expr);
 
 /*End*/
 

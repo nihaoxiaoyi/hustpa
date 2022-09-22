@@ -96,16 +96,15 @@ static int cmd_si(char *args){
   * p expr
   */
   static int cmd_p(char *args){
-    bool flag = true;
+    bool success = true;
     int ret = 0;
-    expr(args, &flag);
-    // uint32_t value = expr(args, &flag);
-    // if(flag==true){
-    //   printf("%d\n",value);
-    // }else{
-    //   printf("expression error\n");
-    //   ret = -1;
-    // }
+    uint32_t value = expr(args, &success);
+    if(success==true){
+      printf("%d\n",value);
+    }else{
+      printf("expression error\n");
+      ret = -1;
+    }
     return ret;
   }
 

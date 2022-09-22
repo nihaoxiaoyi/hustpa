@@ -297,7 +297,7 @@ uint32_t eval(int p, int q, bool *success){
         continue;
       }
       cur_op_token_priority = operator_priority(tokens[i].type);
-      if(cur_op_token_priority>=op_token_priority){
+      if( cur_op_token_priority >= op_token_priority && !(cur_op_token_priority==op_token_priority&&(op_token_priority==1||op_token_priority==2)) ){
         op_token_priority = cur_op_token_priority;
         op_token_index = i;
       }
@@ -305,9 +305,11 @@ uint32_t eval(int p, int q, bool *success){
     if( op_token_index>-1 ){
       uint32_t val1 = 0;
       uint32_t val2 = 0;
-      val1 = eval(p,op_token_index-1,success);
-      if(*success==false){
+      if(tokens[op_token_index].type!=TK_NEGATIVE && tokens[op_token_index].type!=TK_DEREFERENCE){
+        val1 = eval(p,op_token_index-1,success);
+        if(*success==false){
         return 0;
+        }
       }
       val2 = eval(op_token_index+1,q,success);
       if(*success==false){

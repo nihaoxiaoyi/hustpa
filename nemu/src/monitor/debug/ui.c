@@ -137,7 +137,10 @@ static int cmd_x(char *args){
     strcat(expr_str,arg);
     arg = strtok(NULL, " ");
   }
-  printf("%s\n",expr_str);
+  if(strlen(expr_str)==0){
+    error_message("x");
+    return 0;
+  }
   bool success = true;
   vaddr_t addr = expr(expr_str,&success);
   printf("%x\n",addr);

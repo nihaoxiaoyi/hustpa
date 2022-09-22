@@ -133,12 +133,13 @@ static int cmd_x(char *args){
   int n = atoi(arg);
   int len = strlen(arg);
   args = args+len;
+  printf("%s\n",args);
   if(arg==NULL){
     error_message("x");
     return 0;
   }
   bool success = true;
-  vaddr_t addr = expr(arg,&success);
+  vaddr_t addr = expr(args,&success);
   printf("%x\n",addr);
   if(success){
     for(int i=0; i<n; i++){

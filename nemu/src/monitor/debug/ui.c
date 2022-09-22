@@ -23,7 +23,7 @@ void wp_dispaly();
 // void free_wp(int NO);
 
 // (5) Create watchpoint
-WP* new_wp();
+WP* new_wp(uint32_t value, char *expr);
 
 /*End*/
 
@@ -132,6 +132,11 @@ static int cmd_w(char *args){
     value = expr(args,&success);
     if(success){
       wp = create_wp(value,args);
+      if(wp==NULL){
+        printf("watchpoint table full\n");
+      }else{
+        printf("watchpoint %s set success\n",args);
+      }
     }else{
       printf("expression error\n");
     }

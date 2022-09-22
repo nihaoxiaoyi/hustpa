@@ -24,17 +24,17 @@ void init_wp_pool() {
 /**
   * create a watchpoint
   */
-bool create_wp(uint32_t value, char *expr){
+WP* create_wp(uint32_t value, char *expr){
   WP* new_wp = free_;
   if(new_wp==NULL){
-    return false;
+    return NULL;
   }
   free_ = free_->next;
   new_wp->next = head;
   head = new_wp;
   new_wp->value = value;
   strcpy(new_wp->expr,expr);
-  return true;
+  return new_wp;
 }
 
 /**

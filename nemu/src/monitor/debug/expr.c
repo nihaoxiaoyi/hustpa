@@ -187,7 +187,7 @@ void printTokens(int start,int end){
       case TK_REG : printf("%-10s","TK_REG"); printf("%-10s",tokens[i].str); break;
       default: printf("error\n");return;
     }
-    printf("\n");
+    // printf("\n");
   }
 }
 
@@ -316,7 +316,7 @@ uint32_t eval(int p, int q, bool *success){
       switch(tokens[op_token_index].type){
         case TK_NEGATIVE: num = -val2; break;
         case TK_DEREFERENCE: num = paddr_read(val2,4); break;
-        case '*': num = val1+val2; break;
+        case '*': num = val1*val2; break;
         case '/': num = val1/val2; break;
         case '+': num = val1+val2; break;
         case '-': num = val1-val2; break;
@@ -331,7 +331,7 @@ uint32_t eval(int p, int q, bool *success){
           return 0;
         }
       }
-      printf("num = %d",num);
+      printf("num = %d\n",num);
       return num;
     }
     printf("op_token_index == -1\n");

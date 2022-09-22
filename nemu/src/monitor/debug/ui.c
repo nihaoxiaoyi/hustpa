@@ -99,7 +99,7 @@ static int cmd_si(char *args){
     bool success = true;
     uint32_t value = expr(args, &success);
     if(success==true){
-      printf("%d\n",value);
+      printf("%ud\n",value);
     }else{
       printf("expression error\n");
     }

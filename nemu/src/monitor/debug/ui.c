@@ -59,6 +59,10 @@ static int cmd_help(char *args);
 /* Mycode: Add more commands code*/
 /*Start*/
 
+void error_message(const char * command){
+  printf("Please enter help to find the use of the command %s\n",command);
+}
+
 /**
   * let programe execute N instructions and then stop
   * When N is not given, it defaults to 1
@@ -85,8 +89,14 @@ static int cmd_si(char *args){
       switch(args[0]){
         case 'r':isa_reg_display();break;
         case 'w':wp_dispaly();break;
-        default:break;
+        default:{
+          error_message("info");
+          break;
+        }
       }
+    }
+    else{
+      error_message("info");
     }
     return 0;
   }
@@ -97,11 +107,13 @@ static int cmd_si(char *args){
   */
   static int cmd_p(char *args){
     bool success = true;
-    uint32_t value = expr(args, &success);
-    if(success==true){
-      printf("%d\n",value);
-    }else{
-      printf("expression error\n");
+    if(args!=NULL){
+      uint32_t value = expr(args, &success);
+      if(success==true){
+        printf("%d\n",value);
+      }else{
+        printf("expression error\n");
+      }
     }
     return 0;
   }

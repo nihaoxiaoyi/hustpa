@@ -167,9 +167,9 @@ static bool make_token(char *e) {
 
 /*---my funtion to evaluate the expression---*/
 /* Start */
-void printTokens(){
+void printTokens(int start,int end){
   int num = 0;
-  for(int i=0; i<nr_token; i++){
+  for(int i=start; i<=end; i++){
     switch(tokens[i].type){
       case TK_NOTYPE:break;
       case '+' : printf("%-10c",'+'); break;
@@ -228,6 +228,9 @@ int operator_priority(int op){
 }
 
 uint32_t eval(int p, int q, bool *success){
+  printTokens(p,q);
+  printf("\n");
+  system("pause");
   uint32_t num = 0;
   if( p > q ){
     /* Bad expression */
@@ -339,7 +342,6 @@ uint32_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   /* Start */
-  printTokens();
   // dereference address
   for(int i=0;i<nr_token;i++){
     if(tokens[i].type=='*'&&

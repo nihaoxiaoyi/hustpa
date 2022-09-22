@@ -6,6 +6,11 @@
 #include <sys/types.h>
 #include <regex.h>
 
+/* my header file*/
+/* Start */
+#include<stdlib.h>
+/* End */
+
 enum {
   TK_NOTYPE = 256, TK_EQ,
 

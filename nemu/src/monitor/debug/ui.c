@@ -84,41 +84,71 @@ static int cmd_si(char *args){
   * info SUBCMD
   * eg: info r or info w
   */ 
-  static int cmd_info(char *args){
-    if(args!=NULL){
-      switch(args[0]){
-        case 'r':isa_reg_display();break;
-        case 'w':wp_dispaly();break;
-        default:{
-          error_message("info");
-          break;
-        }
+static int cmd_info(char *args){
+  if(args!=NULL){
+    switch(args[0]){
+      case 'r':isa_reg_display();break;
+      case 'w':wp_dispaly();break;
+      default:{
+        error_message("info");
+        break;
       }
     }
-    else{
-      error_message("info");
-    }
-    return 0;
   }
+  else{
+    error_message("info");
+  }
+  return 0;
+}
 
 /**
   * Calculate the value of the expression
   * p expr
   */
-  static int cmd_p(char *args){
-    bool success = true;
-    if(args!=NULL){
-      uint32_t value = expr(args, &success);
-      if(success==true){
-        printf("%d\n",value);
-      }else{
-        printf("expression error\n");
-      }
+static int cmd_p(char *args){
+  bool success = true;
+  if(args!=NULL){
+    uint32_t value = expr(args, &success);
+    if(success==true){
+      printf("%d\n",value);
     }else{
-      error_message("p");
+      printf("expression error\n");
     }
+  }else{
+    error_message("p");
+  }
+  return 0;
+}
+
+/**
+  * scan memory
+  * x N expr
+  */
+static int cmd_x(char *args){
+  if(args==NULL){
+    error_message("x");
     return 0;
   }
+  char *arg = strtok(args, " ");
+  int n = atoi(arg);
+  arg = strtok(NULL, " ");
+  if(arg==NULL){
+    error_message("x");
+    return 0;
+  }
+  bool success = true;
+  vaddr_t addr = expr(arg,&success);
+  printf("%x\n",addr);
+  if(success){
+    for(int i=0; i<n; i++){
+      printf("0x%08x : 0x%08x\n", addr+i*4,vaddr_read(addr+i*4,4));
+    }
+  }
+  else{
+    printf("expr error\n");
+  }
+  return 0;
+}
 
 /**
   * set watchpoint
@@ -146,6 +176,10 @@ static int cmd_w(char *args){
   return 0;
 }
 
+/**
+  * delete watchpoint
+  * d N
+  */
 static int cmd_d(char *args){
   int NO = -1;
   WP* wp;

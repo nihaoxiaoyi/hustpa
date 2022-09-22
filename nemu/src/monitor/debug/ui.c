@@ -20,7 +20,7 @@ void isa_reg_display();
 void wp_dispaly();
 
 // (4) Clear the NO-th Watchpoint
-// void free_wp(int NO);
+WP* delete_wp(int NO);
 
 // (5) Create watchpoint
 WP* create_wp(uint32_t value, char *expr);
@@ -146,6 +146,21 @@ static int cmd_w(char *args){
   return 0;
 }
 
+static int cmd_d(char *args){
+  int NO = -1;
+  WP* wp;
+  if(args!=NULL){
+    NO = atoi(args);
+  }
+  wp = delete_wp(NO);
+  if(wp==NULL){
+    printf("watchpoint %d delete failed\n");
+  }
+  else{
+    printf("watchpoint %d %s %d delete success\n",wp->NO,wp->expr,wp->value);
+  }
+  return 0;
+}
 
 /*End*/
 
@@ -163,7 +178,8 @@ static struct {
   { "si", "Single step execution ( si [N] )", cmd_si},
   { "info", "Print information of registers or watchpoints ( info r || w )", cmd_info},
   { "p", "Evaluate expression ( p expr )", cmd_p},
-  { "w", "set watchpoint ( w expr )", cmd_w}
+  { "w", "set watchpoint ( w expr )", cmd_w},
+  { "d", "delete watchpoint (d N )", cmd_d}
   /*End*/
 };
 

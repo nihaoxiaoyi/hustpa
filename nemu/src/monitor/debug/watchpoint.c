@@ -37,6 +37,27 @@ WP* create_wp(uint32_t value, char *expr){
   return new_wp;
 }
 
+WP* delete_wp(int NO){
+  if( NO<0 || NO>=32 || head==NULL){
+    return NULL;
+  }
+  WP wp_head;
+  WP *pre = &wp_head;
+  pre->next = head;
+  WP *p = pre->next;
+  while(p!=NULL){
+    if(p->NO == NO){
+      pre->next = p->next;
+      p->next = free_;
+      free_->next = p;
+      return p;
+    }
+    pre = p;
+    p = p->next;
+  }
+  return NULL;
+}
+
 /**
   * update watchpoint
   */

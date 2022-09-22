@@ -212,6 +212,7 @@ static struct {
   { "si", "Single step execution ( si [N] )", cmd_si},
   { "info", "Print information of registers or watchpoints ( info r || w )", cmd_info},
   { "p", "Evaluate expression ( p expr )", cmd_p},
+  { "x", "Scan memory ( x N expr )", cmd_x},
   { "w", "set watchpoint ( w expr )", cmd_w},
   { "d", "delete watchpoint (d N )", cmd_d}
   /*End*/

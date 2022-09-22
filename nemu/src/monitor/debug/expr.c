@@ -230,7 +230,7 @@ int operator_priority(int op){
 uint32_t eval(int p, int q, bool *success){
   printTokens(p,q);
   printf("\n");
-  system("pause");
+  getchar();
   uint32_t num = 0;
   if( p > q ){
     /* Bad expression */

@@ -192,7 +192,6 @@ void printTokens(){
 }
 
 bool check_parentheses(int p,int q){
-  bool flag = false;
   int lp  = 0;
   int rp  = 0;
   if(tokens[p].type=='(' && tokens[q].type==')'){

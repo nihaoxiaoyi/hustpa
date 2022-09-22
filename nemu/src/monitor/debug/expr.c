@@ -277,9 +277,9 @@ uint32_t eval(int p, int q, bool *success){
     int rp = 0;
     // find the primary operator to break the expression into two expressions
     for(int i=p; i<=q; i++){
-      if(tokens[i].type='('){
+      if(tokens[i].type=='('){
         lp++;
-      }else if(tokens[i].type=')' && lp>rp){
+      }else if(tokens[i].type==')' && lp>rp){
         rp++;
       }else{
         printf("Bad expression\n");

@@ -7,13 +7,27 @@ const char *regsl[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 
+/* Start */
+
 void isa_reg_display() {
   printf("---information of reg---\n");
-  for(int i=0;i<32;i++){
-    printf("%-4s = 0x%08x\n", reg_name(i,8), reg_l(i));
+  for(int i=0; i<32; i++){
+    printf("%-3s = 0x%08x\n", reg_name(i,8), reg_l(i));
   }
 }
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {
+  *success=true;
+  if(strcmp(s,"pc")==0){
+    return cpu.pc;
+  }
+  for(int i=0; i<32; i++){
+    if(strcmp(s,regsl[i])==0){
+      return reg_l(i);
+    }
+  }
+  *success=false;
   return 0;
 }
+
+/* End */

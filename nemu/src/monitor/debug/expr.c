@@ -136,7 +136,7 @@ static bool make_token(char *e) {
             nr_token++;
             break;
           }
-          default: system("pause");return false; // error token to false
+          // default: system("pause");return false; // error token to false
         }
         /* End */
         break;
@@ -152,6 +152,16 @@ static bool make_token(char *e) {
   return true;
 }
 
+/*---my funtion to evaluate the expression---*/
+/* Start */
+void printTokens(){
+  for(int i=0; i<nr_token; i++){
+    printf("%-5s %-10s\n",tokens[i].type,tokens[i].str);
+  }
+}
+
+/* End */
+
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
@@ -160,7 +170,7 @@ uint32_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   /* Start */
-
+  printTokens();
 
   return 0;
   /* End */

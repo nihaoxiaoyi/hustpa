@@ -12,6 +12,11 @@
 /* restrict the size of log file */
 #define LOG_MAX (1024 * 1024)
 
+/* External function */
+/* Start */
+bool wp_update();
+/* End */
+
 NEMUState nemu_state = {.state = NEMU_STOP};
 
 void interpret_rtl_exit(int state, vaddr_t halt_pc, uint32_t halt_ret) {

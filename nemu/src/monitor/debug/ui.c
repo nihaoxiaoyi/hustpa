@@ -131,7 +131,8 @@ static int cmd_x(char *args){
   }
   char *arg = strtok(args, " ");
   int n = atoi(arg);
-  arg = strtok(NULL, " ");
+  int len = strlen(arg);
+  args = args+len;
   if(arg==NULL){
     error_message("x");
     return 0;

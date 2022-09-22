@@ -24,7 +24,7 @@ void init_wp_pool() {
 /**
   * create a watchpoint
   */
-WP* create_wp(uint32_t value, char *expr){
+WP* new_wp(uint32_t value, char *expr){
   WP* new_wp = free_;
   if(new_wp==NULL){
     return NULL;
@@ -40,7 +40,7 @@ WP* create_wp(uint32_t value, char *expr){
 /**
   * delete a watchpoint
   */
-WP* delete_wp(int NO){
+WP* free_wp(int NO){
   if( NO<0 || NO>=32 || head==NULL){
     return NULL;
   }
@@ -92,7 +92,7 @@ bool wp_update(){
   */
 void wp_dispaly(){
   if(head!=NULL){
-    printf("%-4s %-32s %-10s 0x%-8s\n", "NO", "EXPR", "DECIMAL", "HEX");
+    printf("%-4s %-32s %-10s %-8s\n", "NO", "EXPR", "DECIMAL", "HEX");
     for(WP *node=head; node!=NULL;node=node->next){
       printf("%-4d %-32s %-10d 0x%-8x\n", node->NO,node->expr,node->value,node->value);
     }

@@ -20,10 +20,10 @@ void isa_reg_display();
 void wp_dispaly();
 
 // (4) Clear the NO-th Watchpoint
-WP* delete_wp(int NO);
+WP* free_wp(int NO);
 
 // (5) Create watchpoint
-WP* create_wp(uint32_t value, char *expr);
+WP* new_wp(uint32_t value, char *expr);
 
 /*End*/
 
@@ -167,7 +167,7 @@ static int cmd_w(char *args){
   if(args!=NULL){
     value = expr(args,&success);
     if(success){
-      wp = create_wp(value,args);
+      wp = new_wp(value,args);
       if(wp==NULL){
         printf("watchpoint table full\n");
       }else{
@@ -192,7 +192,7 @@ static int cmd_d(char *args){
   if(args!=NULL){
     NO = atoi(args);
   }
-  wp = delete_wp(NO);
+  wp = free_wp(NO);
   if(wp==NULL){
     printf("watchpoint %d delete failed\n", NO);
   }

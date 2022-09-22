@@ -130,16 +130,20 @@ static int cmd_x(char *args){
     return 0;
   }
   char *arg = strtok(args, " ");
+  char expr_str[32] = "";
   int n = atoi(arg);
-  int len = strlen(arg);
-  // args = args+len;
-  printf("%s\n",args);
+  arg = strtok(NULL, " ");
+  while(arg!=NULL){
+    strcat(expr_str,arg);
+    arg = strtok(NULL, " ");
+  }
+  printf("%s\n",expr_str);
   if(arg==NULL){
     error_message("x");
     return 0;
   }
   bool success = true;
-  vaddr_t addr = expr(args,&success);
+  vaddr_t addr = expr(expr_str,&success);
   printf("%x\n",addr);
   if(success){
     for(int i=0; i<n; i++){

@@ -243,6 +243,7 @@ uint32_t eval(int p, int q, bool *success){
      * For now this token should be a number.
      * Return the value of the number.
      */
+    printf("Single token: %s\n",tokens[p].str);
     switch(tokens[p].type){
       case TK_INT: {
         num = atoi(tokens[p].str); 
@@ -268,10 +269,12 @@ uint32_t eval(int p, int q, bool *success){
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
+     printf("check_parentheses\n");
      num = eval(p+1,q-1,success);
      return num;
   }
   else{
+    printf("other\n");
     /* We should do more things here. */
     int op_token_index = -1;
     int op_token_priority = 0;
@@ -322,11 +325,13 @@ uint32_t eval(int p, int q, bool *success){
         case TK_OR: return val1||val2;
         default: {
           // This situation does not exist
+          printf("tokens[op_token_index].type error\n");
           *success = false;
           return 0;
         }
       }
     }
+    printf("op_token_index == -1\n");
     *success = false;
     return 0;
   }

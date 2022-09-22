@@ -110,7 +110,8 @@ static int cmd_p(char *args){
   if(args!=NULL){
     uint32_t value = expr(args, &success);
     if(success==true){
-      printf("%d\n",value);
+      printf("decimal: %d\n",value);
+      printf("hex    : %x\n",value);
     }else{
       printf("expression error\n");
     }

@@ -228,6 +228,7 @@ int operator_priority(int op){
 }
 
 uint32_t eval(int p, int q, bool *success){
+  printf("\nnew level\n");
   printTokens(p,q);
   printf("\n");
   getchar();
@@ -274,7 +275,7 @@ uint32_t eval(int p, int q, bool *success){
      return num;
   }
   else{
-    printf("other\n");
+    printf("composite eval \n");
     /* We should do more things here. */
     int op_token_index = -1;
     int op_token_priority = 0;
@@ -313,16 +314,16 @@ uint32_t eval(int p, int q, bool *success){
         return 0;
       }
       switch(tokens[op_token_index].type){
-        case TK_NEGATIVE: return -val2;
-        case TK_DEREFERENCE: return paddr_read(val2,4);
-        case '*': return val1+val2;
-        case '/': return val1/val2;
-        case '+': return val1+val2;
-        case '-': return val1-val2;
-        case TK_EQ: return val1==val2;
-        case TK_NOTEQ: return val1!=val2;
-        case TK_AND: return val1&&val2;
-        case TK_OR: return val1||val2;
+        case TK_NEGATIVE: num = -val2; break;
+        case TK_DEREFERENCE: num = paddr_read(val2,4); break;
+        case '*': num = val1+val2; break;
+        case '/': num = val1/val2; break;
+        case '+': num = val1+val2; break;
+        case '-': num = val1-val2; break;
+        case TK_EQ: num = val1==val2; break;
+        case TK_NOTEQ: num = val1!=val2; break;
+        case TK_AND: num = val1&&val2; break;
+        case TK_OR: num = val1||val2; break;
         default: {
           // This situation does not exist
           printf("tokens[op_token_index].type error\n");
@@ -330,6 +331,8 @@ uint32_t eval(int p, int q, bool *success){
           return 0;
         }
       }
+      printf("num = %d",num);
+      return num;
     }
     printf("op_token_index == -1\n");
     *success = false;

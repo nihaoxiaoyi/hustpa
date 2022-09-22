@@ -7,10 +7,12 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ
+  TK_NOTYPE = 256, TK_EQ,
 
   /* TODO: Add more token types */
-
+  /* Start */
+  TK_INT, TK_HEX, TK_REG, TK_NOTEQ, TK_AND, TK_OR
+  /* End */
 };
 
 static struct rule {
@@ -24,7 +26,20 @@ static struct rule {
 
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
-  {"==", TK_EQ}         // equal
+  {"==", TK_EQ},        // equal
+  /* Start */
+  {"\\-", '-'},         // sub
+  {"\\*", '*'},         // mul
+  {"\\/", '/'},         // div
+  {"\\(", '('},         // LP
+  {"\\)", ')'},         // RP
+  {"[0-9]+", TK_INT},   // INT
+  {"0[Xx][0-9A-Fa-f]+",TK_HEX},   // HEX
+  {"!=", TK_NOTEQ},     // not equal
+  {"&&", TK_AND},       // and
+  {"||", TK_OR}          // or
+  // {"\\$(\\)"}        // reg
+  /* End */
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -78,11 +93,44 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-
+         /* Start */
         switch (rules[i].token_type) {
-          default: TODO();
+          case TK_NOTYPE:break;
+          case '+' : tokens[nr_token++].type='+'; break;
+          case '-' : tokens[nr_token++].type='-'; break;
+          case '*' : tokens[nr_token++].type='*'; break;
+          case '/' : tokens[nr_token++].type='/'; break;
+          case '(' : tokens[nr_token++].type='('; break;
+          case ')' : tokens[nr_token++].type=')'; break;
+          case TK_EQ : tokens[nr_token++].type=TK_EQ; break;
+          case TK_NOTEQ : tokens[nr_token++].type=TK_NOTEQ; break;
+          case TK_AND : tokens[nr_token++].type=TK_AND; break;
+          case TK_OR : tokens[nr_token++].type=TK_OR; break;
+          case TK_INT : {
+            tokens[nr_token].type=TK_INT; 
+            if(substr_len>=32){
+              printf("TK_INT too long\n");
+              return false;
+            }
+            strncpy(tokens[nr_token].str,substr_start,substr_len);
+            tokens[nr_token].str[substr_len]='\0';
+            nr_token++;
+            break;
+          }
+          case TK_HEX : {
+            tokens[nr_token].type=TK_HEX; 
+            if(substr_len>=32){
+              printf("TK_HEX too long\n");
+              return false;
+            }
+            strncpy(tokens[nr_token].str,substr_start,substr_len);
+            tokens[nr_token].str[substr_len]='\0';
+            nr_token++;
+            break;
+          }
+          default: system("pause");break;
         }
-
+        /* End */
         break;
       }
     }
@@ -103,7 +151,9 @@ uint32_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+  /* Start */
+
 
   return 0;
+  /* End */
 }

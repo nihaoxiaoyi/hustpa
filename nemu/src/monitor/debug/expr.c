@@ -281,7 +281,7 @@ uint32_t eval(int p, int q, bool *success){
         lp++;
       }else if(tokens[i].type==')' && lp>rp){
         rp++;
-      }else{
+      }else if(tokens[i].type==')' && rp>=lp){
         printf("Bad expression\n");
         *success = false;
         return 0;

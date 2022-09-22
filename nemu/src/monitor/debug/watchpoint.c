@@ -73,10 +73,13 @@ bool wp_update(){
     temp_value = expr(p->expr,&success);
     if(success && temp_value != p->value){
       p->value = temp_value;
-      printf("%-4d %-32s %-32d %-32x\n", p->NO,p->expr,p->value,p->value);
+      printf("%-4d %-32s %-10d 0x%-8x\n", p->NO,p->expr,p->value,p->value);
       pause = true;
     }
     p = p->next;
+  }
+  if(pause){
+    printf("watchpoint changed\n");
   }
   return pause;
 }
@@ -86,9 +89,9 @@ bool wp_update(){
   */
 void wp_dispaly(){
   if(head!=NULL){
-    printf("%-4s %-32s %-32s %-32s\n", "NO", "EXPR", "VALUE", "HEX");
+    printf("%-4s %-32s %-10s 0x%-8s\n", "NO", "EXPR", "DECIMAL", "HEX");
     for(WP *node=head; node!=NULL;node=node->next){
-      printf("%-4d %-32s %-32d %-32x\n", node->NO,node->expr,node->value,node->value);
+      printf("%-4d %-32s %-10d 0x%-8x\n", node->NO,node->expr,node->value,node->value);
     }
   }else{
     printf("No watchpoints were added.\n");

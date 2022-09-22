@@ -38,6 +38,26 @@ WP* create_wp(uint32_t value, char *expr){
 }
 
 /**
+  * update watchpoint
+  */
+bool wp_update(){
+  WP *p = head;
+  bool success = true;
+  bool pause = false;
+  uint32_t temp_value;
+  while(p!=NULL){
+    temp_value = expr(p->expr,&success);
+    if(success && temp_value != p->value){
+      p->value = temp_value;
+      printf("%-4d %-34s %-32d\n", p->NO,p->expr,p->value);
+      pause = true;
+    }
+    p = p->next;
+  }
+  return pause;
+}
+
+/**
   * display watchpoint
   */
 void wp_dispaly(){

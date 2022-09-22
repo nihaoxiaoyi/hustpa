@@ -23,7 +23,7 @@ void wp_dispaly();
 // void free_wp(int NO);
 
 // (5) Create watchpoint
-// WP* new_wp();
+WP* new_wp();
 
 /*End*/
 
@@ -120,9 +120,28 @@ static int cmd_si(char *args){
     return 0;
   }
 
+/**
+  * set watchpoint
+  * w expr
+  */
+static int cmd_w(char *args){
+  uint32_t value;
+  bool success = true;
+  WP *wp;
+  if(args!=NULL){
+    value = expr(args,&success);
+    if(success){
+      wp = create_wp(value,args);
+    }else{
+      printf("expression error\n");
+    }
+  }else{
+    error_message("w");
+  }
+  return 0;
+}
 
 
-  
 /*End*/
 
 static struct {

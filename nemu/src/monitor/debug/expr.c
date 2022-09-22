@@ -235,7 +235,7 @@ uint32_t eval(int p, int q, bool *success){
   uint32_t num = 0;
   if( p > q ){
     /* Bad expression */
-    printf("Bad expression\n");
+    // printf("Bad expression\n");
     *success = false;
     return 0;
   }
@@ -259,7 +259,7 @@ uint32_t eval(int p, int q, bool *success){
         break;
       }
       default:{
-        printf("Bad Single token index : %d\n",p);
+        // printf("Bad Single token index : %d\n",p);
         *success = false;
         break;
       } 
@@ -289,7 +289,7 @@ uint32_t eval(int p, int q, bool *success){
       }else if(tokens[i].type==')' && lp>rp){
         rp++;
       }else if(tokens[i].type==')' && rp>=lp){
-        printf("Bad expression\n");
+        // printf("Bad expression\n");
         *success = false;
         return 0;
       }
@@ -319,7 +319,13 @@ uint32_t eval(int p, int q, bool *success){
         case TK_NEGATIVE: num = -val2; break;
         case TK_DEREFERENCE: num = paddr_read(val2,4); break;
         case '*': num = val1*val2; break;
-        case '/': num = val1/val2; break;
+        case '/': {
+          if(val2!=0){
+            num = val1/val2;
+          } 
+          *success = false;
+          break;
+        }
         case '+': num = val1+val2; break;
         case '-': num = val1-val2; break;
         case TK_EQ: num = val1==val2; break;
@@ -328,7 +334,7 @@ uint32_t eval(int p, int q, bool *success){
         case TK_OR: num = val1||val2; break;
         default: {
           // This situation does not exist
-          printf("tokens[op_token_index].type error\n");
+          // printf("tokens[op_token_index].type error\n");
           *success = false;
           return 0;
         }

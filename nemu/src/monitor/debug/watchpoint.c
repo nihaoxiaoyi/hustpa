@@ -19,16 +19,22 @@ void init_wp_pool() {
 }
 
 /* TODO: Implement the functionality of watchpoint */
+/* Start */
 
 /**
   * create a watchpoint
   */
-WP* create_wp(){
+bool create_wp(uint32_t value, char *expr){
   WP* new_wp = free_;
+  if(new_wp==NULL){
+    return false;
+  }
   free_ = free_->next;
   new_wp->next = head;
   head = new_wp;
-  return new_wp;
+  new_wp->value = value;
+  strcpy(new_wp->expr,expr);
+  return true;
 }
 
 /**
@@ -45,3 +51,4 @@ void wp_dispaly(){
   }
 }
 
+/* End */

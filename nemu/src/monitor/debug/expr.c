@@ -50,7 +50,7 @@ static struct rule {
   {"[0-9]+", TK_INT},   // INT
   {"!=", TK_NOTEQ},     // not equal
   {"&&", TK_AND},       // and
-  {"||", TK_OR},          // or
+  {"\\|\\|", TK_OR},          // or
   {"\\$(\\$0|ra|sp|gp|tp|t[0-6]|s[0-9]|a[0-7]|s10|s11))", TK_REG}        // reg
   /* End */
 };
@@ -187,7 +187,7 @@ void printTokens(int start,int end){
       case TK_REG : printf("%-10s","TK_REG"); printf("%-10s",tokens[i].str); break;
       default: printf("error\n");return;
     }
-    // printf("\n");
+    printf("\n");
   }
 }
 
@@ -228,10 +228,10 @@ int operator_priority(int op){
 }
 
 uint32_t eval(int p, int q, bool *success){
-  printf("\nnew level\n");
-  printTokens(p,q);
-  printf("\n");
-  getchar();
+  // printf("\nnew level\n");
+  // printTokens(p,q);
+  // printf("\n");
+  // getchar();
   uint32_t num = 0;
   if( p > q ){
     /* Bad expression */
@@ -244,7 +244,7 @@ uint32_t eval(int p, int q, bool *success){
      * For now this token should be a number.
      * Return the value of the number.
      */
-    printf("Single token: %s\n",tokens[p].str);
+    // printf("Single token: %s\n",tokens[p].str);
     switch(tokens[p].type){
       case TK_INT: {
         num = atoi(tokens[p].str); 
@@ -270,12 +270,12 @@ uint32_t eval(int p, int q, bool *success){
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
-     printf("check_parentheses\n");
+    //  printf("check_parentheses\n");
      num = eval(p+1,q-1,success);
      return num;
   }
   else{
-    printf("composite eval \n");
+    // printf("composite eval \n");
     /* We should do more things here. */
     int op_token_index = -1;
     int op_token_priority = 0;
@@ -331,10 +331,10 @@ uint32_t eval(int p, int q, bool *success){
           return 0;
         }
       }
-      printf("num = %d\n",num);
+      // printf("num = %d\n",num);
       return num;
     }
-    printf("op_token_index == -1\n");
+    // printf("op_token_index == -1\n");
     *success = false;
     return 0;
   }

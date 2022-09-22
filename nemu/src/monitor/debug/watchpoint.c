@@ -37,6 +37,9 @@ WP* create_wp(uint32_t value, char *expr){
   return new_wp;
 }
 
+/**
+  * delete a watchpoint
+  */
 WP* delete_wp(int NO){
   if( NO<0 || NO>=32 || head==NULL){
     return NULL;

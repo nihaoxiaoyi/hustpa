@@ -132,7 +132,7 @@ static int cmd_x(char *args){
   char *arg = strtok(args, " ");
   int n = atoi(arg);
   int len = strlen(arg);
-  args = args+len;
+  // args = args+len;
   printf("%s\n",args);
   if(arg==NULL){
     error_message("x");

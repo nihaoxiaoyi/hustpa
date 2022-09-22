@@ -51,7 +51,7 @@ static struct rule {
   {"!=", TK_NOTEQ},     // not equal
   {"&&", TK_AND},       // and
   {"\\|\\|", TK_OR},          // or
-  {"\\$(\\$0|ra|sp|gp|tp|t[0-6]|s[0-9]|a[0-7]|s10|s11))", TK_REG}        // reg
+  {"\\$(\\$0|ra|sp|gp|tp|t[0-6]|s[0-9]|a[0-7]|s10|s11)", TK_REG}        // reg
   /* End */
 };
 

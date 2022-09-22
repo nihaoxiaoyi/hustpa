@@ -53,6 +53,9 @@ WP* delete_wp(int NO){
       pre->next = p->next;
       p->next = free_;
       free_->next = p;
+      if(wp_head.next==NULL){
+        head = NULL;
+      }
       return p;
     }
     pre = p;

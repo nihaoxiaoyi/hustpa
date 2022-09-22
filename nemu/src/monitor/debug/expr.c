@@ -168,11 +168,12 @@ void printTokens(){
       case TK_NOTEQ : printf("%-10s","TK_NOTEQ"); break;
       case TK_AND : printf("%-10s","TK_AND"); break;
       case TK_OR :  printf("%-10s","TK_OR"); break;
-      case TK_INT : printf("%-10s","TK_INT"); printf("%-10s\n",tokens[i].str); break;
-      case TK_HEX : printf("%-10s","TK_HEX"); printf("%-10s\n",tokens[i].str); break;
-      case TK_REG : printf("%-10s","TK_REG"); printf("%-10s\n",tokens[i].str); break;
-      default: printf("error");return;
+      case TK_INT : printf("%-10s","TK_INT"); printf("%-10d",atoi(tokens[i].str)); break;
+      case TK_HEX : printf("%-10s","TK_HEX"); printf("%-10s",tokens[i].str); break;
+      case TK_REG : printf("%-10s","TK_REG"); printf("%-10s",tokens[i].str); break;
+      default: printf("error\n");return;
     }
+    printf("\n");
   }
 }
 

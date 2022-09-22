@@ -12,12 +12,18 @@
 #include<stdlib.h>
 /* End */
 
+/* External function */
+/* End */
+uint32_t isa_reg_str2val(const char *s, bool *success);
+uint32_t paddr_read(paddr_t addr, int len);
+/* End */
+
 enum {
   TK_NOTYPE = 256, TK_EQ,
 
   /* TODO: Add more token types */
   /* Start */
-  TK_INT, TK_HEX, TK_REG, TK_NOTEQ, TK_AND, TK_OR
+  TK_INT, TK_HEX, TK_REG, TK_NOTEQ, TK_AND, TK_OR, TK_DEREFERENCE, TK_NEGATIVE
   /* End */
 };
 
@@ -142,7 +148,8 @@ static bool make_token(char *e) {
             nr_token++;
             break;
           }
-          // default: system("pause");return false; // error token to false
+          case TK_DEREFERENCE : tokens[nr_token++].type=TK_DEREFERENCE; break; 
+          case TK_NEGATIVE : tokens[nr_token++].type=TK_NEGATIVE; break; 
         }
         /* End */
         break;
@@ -184,6 +191,145 @@ void printTokens(){
   }
 }
 
+bool check_parentheses(int p,int q){
+  bool flag = false;
+  int lp  = 0;
+  int rp  = 0;
+  if(tokens[p].type=='(' && tokens[q].type==')'){
+    for(int i = p+1; i<=q-1; i++){
+      if( tokens[i].type=='(' ){
+        lp++;
+      }
+      else if(tokens[i].type==')' && lp>rp ){
+        rp++;
+      }
+      else{
+        return false;
+      }
+    }
+    return lp == rp;
+  }
+  return false;
+}
+
+int operator_priority(int op){
+  switch(op){
+    case TK_NEGATIVE: return 1;
+    case TK_DEREFERENCE: return 2;
+    case '*':
+    case '/': return 3;
+    case '+':
+    case '-': return 4;
+    case TK_EQ:
+    case TK_NOTEQ: return 5;
+    case TK_AND: return 6;
+    case TK_OR: return 7;
+    default: return 0;
+  }
+}
+
+uint32_t eval(int p, int q, bool *success){
+  uint32_t num = 0;
+  if( p > q ){
+    /* Bad expression */
+    printf("Bad expression\n");
+    *success = false;
+    return 0;
+  }
+  else if( p == q ){
+    /* Single token.
+     * For now this token should be a number.
+     * Return the value of the number.
+     */
+    switch(tokens[p].type){
+      case TK_INT: {
+        num = atoi(tokens[p].str); 
+        break;
+      }
+      case TK_HEX: {
+        num = sscanf(tokens[p].str,"%x",&num); 
+        break;
+      }
+      case TK_REG: {
+        num = isa_reg_str2val(tokens[p].str,success);
+        break;
+      }
+      default:{
+        printf("Bad Single token index : %d\n",p);
+        *success = false;
+        break;
+      } 
+    }
+    return num;
+  }
+  else if( check_parentheses(p, q) == true ){
+    /* The expression is surrounded by a matched pair of parentheses.
+     * If that is the case, just throw away the parentheses.
+     */
+     num = eval(p+1,q-1,success);
+     return num;
+  }
+  else{
+    /* We should do more things here. */
+    int op_token_index = -1;
+    int op_token_priority = 0;
+    int cur_op_token_priority = 0;
+    int lp = 0;
+    int rp = 0;
+    // find the primary operator to break the expression into two expressions
+    for(int i=p; i<=q; i++){
+      if(tokens[i].type='('){
+        lp++;
+      }else if(tokens[i].type=')' && lp>rp){
+        rp++;
+      }else{
+        printf("Bad expression\n");
+        *success = false;
+        return 0;
+      }
+      if( lp!=rp || operator_priority(tokens[i].type)==0 ){
+        continue;
+      }
+      cur_op_token_priority = operator_priority(tokens[i].type);
+      if(cur_op_token_priority>=op_token_priority){
+        op_token_priority = cur_op_token_priority;
+        op_token_index = i;
+      }
+    }
+    if( op_token_index>-1 ){
+      uint32_t val1 = 0;
+      uint32_t val2 = 0;
+      val1 = eval(p,op_token_index-1,success);
+      if(*success==false){
+        return 0;
+      }
+      val2 = eval(op_token_index+1,q,success);
+      if(*success==false){
+        return 0;
+      }
+      switch(tokens[op_token_index].type){
+        case TK_NEGATIVE: return -val2;
+        case TK_DEREFERENCE: return paddr_read(val2,4);
+        case '*': return val1+val2;
+        case '/': return val1/val2;
+        case '+': return val1+val2;
+        case '-': return val1-val2;
+        case TK_EQ: return val1==val2;
+        case TK_NOTEQ: return val1!=val2;
+        case TK_AND: return val1&&val2;
+        case TK_OR: return val1||val2;
+        default: {
+          // This situation does not exist
+          *success = false;
+          return 0;
+        }
+      }
+    }
+    *success = false;
+    return 0;
+  }
+}
+
 /* End */
 
 uint32_t expr(char *e, bool *success) {
@@ -195,7 +341,25 @@ uint32_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   /* Start */
   printTokens();
-
-  return 0;
+  // dereference address
+  for(int i=0;i<nr_token;i++){
+    if(tokens[i].type=='*'&&
+        (i==0||tokens[i-1].type=='+'||tokens[i-1].type=='-'||tokens[i-1].type=='*'
+        ||tokens[i-1].type=='/'||tokens[i-1].type=='('||tokens[i-1].type==TK_DEREFERENCE)
+        ){
+      tokens[i].type=TK_DEREFERENCE;
+    }
+  }
+  // negative number
+  for(int i=0;i<nr_token;i++){
+    if(tokens[i].type=='-'&&
+        (i==0||tokens[i-1].type=='+'||tokens[i-1].type=='-'||tokens[i-1].type=='*'
+        ||tokens[i-1].type=='/'||tokens[i-1].type=='('||tokens[i-1].type==TK_NEGATIVE)
+        ){
+      tokens[i].type=TK_NEGATIVE;
+    }
+  }
+  // evaluate the expr
+  return eval(0, nr_token-1, success);
   /* End */
 }

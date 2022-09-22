@@ -27,6 +27,7 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
+
   /* Start */
   {"\\-", '-'},         // sub
   {"\\*", '*'},         // mul
@@ -37,8 +38,8 @@ static struct rule {
   {"0[Xx][0-9A-Fa-f]+",TK_HEX},   // HEX
   {"!=", TK_NOTEQ},     // not equal
   {"&&", TK_AND},       // and
-  {"||", TK_OR}          // or
-  // {"\\$(\\)"}        // reg
+  {"||", TK_OR},          // or
+  {"\\$(\\$0|ra|sp|gp|tp|t[0-6]|s[0-9]|a[0-7]|s10|s11))", TK_REG}        // reg
   /* End */
 };
 
@@ -128,7 +129,14 @@ static bool make_token(char *e) {
             nr_token++;
             break;
           }
-          default: system("pause");break;
+          case TK_REG : {
+            tokens[nr_token].type=TK_REG;
+            strncpy(tokens[nr_token].str,substr_start+1,substr_len-1);
+            tokens[nr_token].str[substr_len-1]='\0';
+            nr_token++;
+            break;
+          }
+          default: system("pause");return false; // error token to false
         }
         /* End */
         break;

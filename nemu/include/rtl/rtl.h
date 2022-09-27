@@ -49,29 +49,25 @@ make_rtl_arith_logic(div_r)
 make_rtl_arith_logic(idiv_q)
 make_rtl_arith_logic(idiv_r)
 
-static inline void interpret_rtl_div64_q(rtlreg_t* dest,
-    const rtlreg_t* src1_hi, const rtlreg_t* src1_lo, const rtlreg_t* src2) {
+static inline void interpret_rtl_div64_q(rtlreg_t* dest, const rtlreg_t* src1_hi, const rtlreg_t* src1_lo, const rtlreg_t* src2) {
   uint64_t dividend = ((uint64_t)(*src1_hi) << 32) | (*src1_lo);
   uint32_t divisor = (*src2);
   *dest = dividend / divisor;
 }
 
-static inline void interpret_rtl_div64_r(rtlreg_t* dest,
-    const rtlreg_t* src1_hi, const rtlreg_t* src1_lo, const rtlreg_t* src2) {
+static inline void interpret_rtl_div64_r(rtlreg_t* dest, const rtlreg_t* src1_hi, const rtlreg_t* src1_lo, const rtlreg_t* src2) {
   uint64_t dividend = ((uint64_t)(*src1_hi) << 32) | (*src1_lo);
   uint32_t divisor = (*src2);
   *dest = dividend % divisor;
 }
 
-static inline void interpret_rtl_idiv64_q(rtlreg_t* dest,
-    const rtlreg_t* src1_hi, const rtlreg_t* src1_lo, const rtlreg_t* src2) {
+static inline void interpret_rtl_idiv64_q(rtlreg_t* dest, const rtlreg_t* src1_hi, const rtlreg_t* src1_lo, const rtlreg_t* src2) {
   int64_t dividend = ((uint64_t)(*src1_hi) << 32) | (*src1_lo);
   int32_t divisor = (*src2);
   *dest = dividend / divisor;
 }
 
-static inline void interpret_rtl_idiv64_r(rtlreg_t* dest,
-    const rtlreg_t* src1_hi, const rtlreg_t* src1_lo, const rtlreg_t* src2) {
+static inline void interpret_rtl_idiv64_r(rtlreg_t* dest, const rtlreg_t* src1_hi, const rtlreg_t* src1_lo, const rtlreg_t* src2) {
   int64_t dividend = ((uint64_t)(*src1_hi) << 32) | (*src1_lo);
   int32_t divisor = (*src2);
   *dest = dividend % divisor;
@@ -129,32 +125,47 @@ void interpret_rtl_exit(int state, vaddr_t halt_pc, uint32_t halt_ret);
 
 
 /* RTL pseudo instructions */
+/* Start */
 
 static inline void rtl_not(rtlreg_t *dest, const rtlreg_t* src1) {
   // dest <- ~src1
-  TODO();
+  // TODO();
+  *dest = ~(*src1);
 }
 
+// Symbolic extension
 static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- signext(src1[(width * 8 - 1) .. 0])
-  TODO();
+  // TODO();
+  int32_t num = *src1;
+  width = width<<3;
+  *dest = (num<<width)>>width;
 }
 
-static inline void rtl_setrelopi(uint32_t relop, rtlreg_t *dest,
-    const rtlreg_t *src1, int imm) {
+static inline void rtl_setrelopi(uint32_t relop, rtlreg_t *dest, const rtlreg_t *src1, int imm) {
   rtl_li(&ir, imm);
   rtl_setrelop(relop, dest, src1, &ir);
 }
 
 static inline void rtl_msb(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- src1[width * 8 - 1]
-  TODO();
+  // TODO();
+  rtl_shr(dest,src1,width*8-1);
 }
 
 static inline void rtl_mux(rtlreg_t* dest, const rtlreg_t* cond, const rtlreg_t* src1, const rtlreg_t* src2) {
   // dest <- (cond ? src1 : src2)
-  TODO();
+  // TODO();
+  if(*cond){
+    *dest = *src1;
+  }
+  else{
+    *dest = *src2;
+  }
+  
 }
+
+/* End */
 
 #include "isa/rtl.h"
 

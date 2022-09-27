@@ -13,6 +13,7 @@ make_EHelper(ld) {
 }
 
 make_EHelper(st) {
+  printf("s: 0x%x\n",id_src->addr);
   rtl_sm(&id_src->addr, &id_dest->val, decinfo.width);
 
   switch (decinfo.width) {
@@ -38,6 +39,6 @@ make_EHelper(lb) {
   rtl_sext(&s1, &s0, 1);
   rtl_sr(id_dest->reg, &s1, 4);
 
-  print_asm_template2(lh);
+  print_asm_template2(lb);
 }
 /* End */

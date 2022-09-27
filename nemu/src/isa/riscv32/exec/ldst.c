@@ -22,3 +22,9 @@ make_EHelper(st) {
     default: assert(0);
   }
 }
+
+/* my instruction */
+/* Start */
+
+
+/* End */

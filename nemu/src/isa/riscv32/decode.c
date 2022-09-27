@@ -57,7 +57,8 @@ make_DHelper(st) {
 
  /**
    * op  : operand 
-   * val : reg or imm
+   * val : reg or imm ( instr.xxx )
+   *     : ISADecodeInfo and Instr define in /include/isa/decode.h
    * load_val : true( load data from reg )
   */
 make_DHelper(R) {

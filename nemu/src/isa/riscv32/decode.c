@@ -43,13 +43,11 @@ make_DHelper(ld) {
 make_DHelper(st) {
   decode_op_r(id_src, decinfo.isa.instr.rs1, true);
   int32_t simm = (decinfo.isa.instr.simm11_5 << 5) | decinfo.isa.instr.imm4_0;
-  // printf("decode.c s:slimm=0x%x\n",simm);  // my test
 
   decode_op_i(id_src2, simm, true);
 
   print_Dop(id_src->str, OP_STR_SIZE, "%d(%s)", id_src2->val, reg_name(id_src->reg, 4));
 
-  // printf("s:%s=0x%x\n", reg_name(id_src->reg,4), id_src->val);  // my test
   rtl_add(&id_src->addr, &id_src->val, &id_src2->val);
 
   decode_op_r(id_dest, decinfo.isa.instr.rs2, true);
@@ -102,8 +100,6 @@ make_DHelper(J) {
   print_Dop(id_src->str, OP_STR_SIZE, "0x%x", offset);
 
   decode_op_r(id_dest, decinfo.isa.instr.rd, false);
-
-  // printf("decode.c J: offset=0x%x\n",offset); // my test
 }
 
 /* End */

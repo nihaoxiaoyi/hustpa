@@ -13,7 +13,7 @@ make_EHelper(ld) {
 }
 
 make_EHelper(st) {
-  printf("s: 0x%x\n",id_src->addr);
+  // printf("idst.c s: 0x%x\n",id_src->addr);  // my test
   rtl_sm(&id_src->addr, &id_dest->val, decinfo.width);
 
   switch (decinfo.width) {

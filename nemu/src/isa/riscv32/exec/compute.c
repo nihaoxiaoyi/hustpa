@@ -15,11 +15,17 @@ make_DHelper(auipc) {
   print_asm_template2(auipc);
 }
 
-make_EHelper(addi){
-  rtl_add(&id_dest->val, &id_src->val, &id_src2->val);
-  rtl_sr(id_dest->reg, &id_dest->val, 4);
-  
-  print_asm_template2(addi);
+make_EHelper(imm_opcode_4){
+  switch (decinfo.isa.instr.funct3){
+  case 0:{  // addi
+    rtl_add(&id_dest->val,&id_src->val,&id_src2->val);
+    rtl_sr(id_dest->reg,&id_dest->val,4);
+    print_asm_template2(addi);
+    break;
+  }
+  default:
+    break;
+  }
 }
 
 /* End */

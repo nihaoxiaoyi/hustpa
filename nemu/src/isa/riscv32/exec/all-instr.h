@@ -13,8 +13,7 @@ make_EHelper(nemu_trap);    // special.c
 
 // compute.c
 make_EHelper(auipc);
-make_EHelper(addi);
-// make_EHelper(imm);
+make_EHelper(imm_opcode_4);
 // make_EHelper(reg);
 
 // control.c

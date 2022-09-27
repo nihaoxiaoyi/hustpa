@@ -1,9 +1,9 @@
 #include "cpu/exec.h"
 #include "all-instr.h"
 
-// mycode: EXW(ld,1)  EXW(ld,2)
+// mycode: EX(lb)  EX(lh)  EXW(ld,1)  EXW(ld,2)
 static OpcodeEntry load_table [8] = {
-  EMPTY, EMPTY, EXW(ld, 4), EMPTY, EXW(ld,1), EXW(ld,2), EMPTY, EMPTY
+  EX(lb), EX(lh), EXW(ld, 4), EMPTY, EXW(ld,1), EXW(ld,2), EMPTY, EMPTY
 };
 
 static make_EHelper(load) {

@@ -22,8 +22,8 @@ make_EHelper(jalr);
 // make_EHelper(branch);
 
 // ldst.c
-// make_EHelper(lh);
-// make_EHelper(lb);
+make_EHelper(lh);
+make_EHelper(lb);
 
 // system.c
 // make_EHelper(sys);

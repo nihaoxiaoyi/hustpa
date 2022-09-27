@@ -25,6 +25,19 @@ make_EHelper(st) {
 
 /* my instruction */
 /* Start */
+make_EHelper(lh) {
+  rtl_lm(&s0, &id_src->addr, 2);
+  rtl_sext(&s1, &s0, 2);
+  rtl_sr(id_dest->reg, &s1, 4);
 
+  print_asm_template2(lh);
+}
 
+make_EHelper(lb) {
+  rtl_lm(&s0, &id_src->addr, 1);
+  rtl_sext(&s1, &s0, 1);
+  rtl_sr(id_dest->reg, &s1, 4);
+
+  print_asm_template2(lh);
+}
 /* End */

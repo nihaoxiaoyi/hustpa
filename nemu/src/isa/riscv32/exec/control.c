@@ -33,11 +33,15 @@ make_EHelper(B_opcode_18){
 
   switch (decinfo.isa.instr.funct3)
   {
-  case 0: { // beq
+  case 0: { // beq || beqz
     rtl_jrelop(RELOP_EQ, &id_src->val, &id_src2->val, decinfo.jmp_pc);
 
-    print_asm_template2(beq);
-
+    if(id_src2->reg != 0){
+      print_asm_template2(beq);
+    }
+    else{
+      print_asm_template2(beqz);
+    }
     break;
   }
   case 1: { // bne

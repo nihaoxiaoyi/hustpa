@@ -15,9 +15,8 @@ void _putc(char ch) {
 }
 
 void _halt(int code) {
-  printf("scode = 0x%x\n",code);
   nemu_trap(code);
-  printf("ecode = 0x%x\n",code);
+
   // should not reach here
   while (1);
 }

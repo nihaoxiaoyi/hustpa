@@ -27,5 +27,6 @@ make_EHelper(nemu_trap) {
   printf("ok\n");
 
   print_asm("nemu trap");
+  printf("nemu trap\n");
   return;
 }

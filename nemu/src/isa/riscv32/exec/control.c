@@ -36,14 +36,8 @@ make_EHelper(B_opcode_18){
   case 0: { // beq || beqz
     rtl_jrelop(RELOP_EQ, &id_src->val, &id_src2->val, decinfo.jmp_pc);
 
-    printf("%d %s=0x%x  , %d %s=0x%x",id_src->reg,reg_name(id_src->reg,4),id_src->val,id_src2->reg,reg_name(id_src2->reg,4),id_src2->val);
     print_asm_template2(beq);
-    // if(id_src2->reg != 0){
-    //   print_asm_template2(beq);
-    // }
-    // else{
-    //   print_asm_template2(beqz);
-    // }
+
     break;
   }
   case 1: { // bne

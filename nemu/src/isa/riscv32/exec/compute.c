@@ -184,13 +184,13 @@ make_EHelper(R_opcode_c){
       rtl_shr(&id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
-      print_asm_template3(srl);
+      print_asm_template2(srl);
     }
     else if(decinfo.isa.instr.funct7 == 0x2){ // sra
       rtl_sar(&id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
-      print_asm_template3(sra);
+      print_asm_template2(sra);
     }
     else{ // divu
       rtl_div_q(&id_dest->val, &id_src->val, &id_src2->val);

@@ -100,17 +100,16 @@ make_EHelper(I_opcode_4){
  * opcode of R_type_Instruction  equal to 0xc
 */
 make_EHelper(R_opcode_c){
-  switch (decinfo.isa.instr.funct3)
-  {
+  switch (decinfo.isa.instr.funct3){
   case 0: {
-    if(decinfo.isa.instr.funct7 == 0x0){ // add
+    if(decinfo.isa.instr.funct7 == 0x00){ // add
       rtl_add(&id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
       print_asm_template3(add);
       
     }
-    else if(decinfo.isa.instr.funct7 == 0x2){ // sub
+    else if(decinfo.isa.instr.funct7 == 0x20){ // sub
       rtl_sub(&id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
@@ -125,7 +124,7 @@ make_EHelper(R_opcode_c){
     break;
   }
   case 1: {
-    if(decinfo.isa.instr.funct7 == 0x0){  // sll
+    if(decinfo.isa.instr.funct7 == 0x00){  // sll
       rtl_shl(&id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
@@ -140,7 +139,7 @@ make_EHelper(R_opcode_c){
     }
   }
   case 2: {
-    if(decinfo.isa.instr.funct7 == 0x0){  // slt
+    if(decinfo.isa.instr.funct7 == 0x00){  // slt
       id_dest->val = (signed)id_src->val < (signed)id_src2->val;
 
       rtl_sr(id_dest->reg, &id_dest->val, 4);
@@ -153,7 +152,7 @@ make_EHelper(R_opcode_c){
     break;
   }
   case 3: {
-    if(decinfo.isa.instr.funct7 == 0x0){  // sltu
+    if(decinfo.isa.instr.funct7 == 0x00){  // sltu
       id_dest->val = (unsigned)id_src->val < (unsigned)id_src2->val;
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
@@ -165,7 +164,7 @@ make_EHelper(R_opcode_c){
     break;
   }
   case 4: {
-    if(decinfo.isa.instr.funct7 == 0x0){ // xor
+    if(decinfo.isa.instr.funct7 == 0x00){ // xor
       rtl_xor(&id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
@@ -180,17 +179,17 @@ make_EHelper(R_opcode_c){
     break;
   }
   case 5: {
-    if(decinfo.isa.instr.funct7 == 0x0){  // srl
+    if(decinfo.isa.instr.funct7 == 0x00){  // srl
       rtl_shr(&id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
-      print_asm_template2(srl);
+      print_asm_template3(srl);
     }
-    else if(decinfo.isa.instr.funct7 == 0x2){ // sra
+    else if(decinfo.isa.instr.funct7 == 0x20){ // sra
       rtl_sar(&id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
-      print_asm_template2(sra);
+      print_asm_template3(sra);
     }
     else{ // divu
       rtl_div_q(&id_dest->val, &id_src->val, &id_src2->val);
@@ -201,7 +200,7 @@ make_EHelper(R_opcode_c){
     break;
   }
   case 6: {
-    if(decinfo.isa.instr.funct7 == 0x0){  // or
+    if(decinfo.isa.instr.funct7 == 0x00){  // or
       rtl_or(&id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
@@ -216,7 +215,7 @@ make_EHelper(R_opcode_c){
     break;
   }
   case 7: { // and
-    if(decinfo.isa.instr.funct7 == 0x0){
+    if(decinfo.isa.instr.funct7 == 0x00){
       rtl_and(&id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 

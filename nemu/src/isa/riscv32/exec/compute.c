@@ -137,7 +137,6 @@ make_EHelper(R_opcode_c){
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
       print_asm_template3(mulh);
-      printf("mulh\n");
     }
   }
   case 2: {

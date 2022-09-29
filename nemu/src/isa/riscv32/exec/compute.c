@@ -1,20 +1,20 @@
-// #include "cpu/exec.h"
+#include "cpu/exec.h"
 
-// make_EHelper(lui) {
-//   rtl_sr(id_dest->reg, &id_src->val, 4);
+make_EHelper(lui) {
+  rtl_sr(id_dest->reg, &id_src->val, 4);
 
-//   print_asm_template2(lui);
-// }
+  print_asm_template2(lui);
+}
 
-// /* my instruction */
-// /* Start */
+/* my instruction */
+/* Start */
 
-// make_EHelper(auipc) {
-//   rtl_add(&id_dest->val, &cpu.pc, &id_src->val);
-//   rtl_sr(id_dest->reg, &id_dest->val, 4);
+make_EHelper(auipc) {
+  rtl_add(&id_dest->val, &cpu.pc, &id_src->val);
+  rtl_sr(id_dest->reg, &id_dest->val, 4);
 
-//   print_asm_template2(auipc);
-// }
+  print_asm_template2(auipc);
+}
 
 // /**
 //  * opcode of I_type_Instruction  equal to 0x4
@@ -237,21 +237,6 @@
 //   }
 // }
 // /* End */
-
-#include "cpu/exec.h"
-
-make_EHelper(lui) {
-  rtl_sr(id_dest->reg, &id_src->val, 4);
-
-  print_asm_template2(lui);
-}
-
-make_EHelper(auipc){
-  rtl_add(&id_dest->val,&cpu.pc,&id_src->val);
-  rtl_sr(id_dest->reg,&id_dest->val,4);
-
-  print_asm_template2(auipc);
-}
 
 make_EHelper(I_opcode_4){
   switch(decinfo.isa.instr.funct3){

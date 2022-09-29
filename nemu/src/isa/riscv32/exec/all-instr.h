@@ -14,12 +14,12 @@ make_EHelper(nemu_trap);    // special.c
 // compute.c
 make_EHelper(auipc);
 make_EHelper(I_opcode_4);
-// make_EHelper(reg);
+make_EHelper(R_opcode_c);
 
 // control.c
 make_EHelper(jal);
 make_EHelper(jalr);
-// make_EHelper(branch);
+make_EHelper(B_opcode_18);
 
 // ldst.c
 make_EHelper(lh);

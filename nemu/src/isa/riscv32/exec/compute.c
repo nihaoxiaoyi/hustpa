@@ -230,7 +230,10 @@ make_EHelper(R_opcode_c){
     }
     break;
   }
-  default: break;
+  default: {
+    printf("R_code_c error\n");
+    break;
+  }
   }
 }
 /* End */

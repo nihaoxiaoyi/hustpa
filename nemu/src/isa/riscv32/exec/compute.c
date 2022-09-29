@@ -116,7 +116,7 @@ make_EHelper(R_opcode_c){
       print_asm_template3(sub);
     }
     else{ // mul
-      rtl_mul_lo(&id_dest->val, &id_src->val, &id_src2->val);
+      rtl_imul_lo(&id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
       print_asm_template3(mul);
@@ -132,7 +132,7 @@ make_EHelper(R_opcode_c){
 
     }
     else{  // mulh
-      rtl_mul_hi(&id_dest->val, &id_src->val, &id_src2->val);
+      rtl_imul_hi(&id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
       print_asm_template3(mulh);

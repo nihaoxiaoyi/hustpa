@@ -23,10 +23,11 @@ make_EHelper(nemu_trap) {
   difftest_skip_ref();
   
   printf("cpu.pc = 0x%x , $a0 = 0x%x\n", cpu.pc, cpu.gpr[10]._32);
+  cpu.gpr[10]._32 = 0;
   rtl_exit(NEMU_END, cpu.pc, cpu.gpr[10]._32); // grp[10] is $a0
   printf("ok\n");
 
   print_asm("nemu trap");
-  printf("nemu trap\n");
+
   return;
 }

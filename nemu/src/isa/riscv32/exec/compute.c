@@ -126,7 +126,7 @@ make_EHelper(R_opcode_c){
   }
   case 1: {
     if(decinfo.isa.instr.funct7 == 0x0){  // sll
-      rtl_shl(&id_dest->val, &id_src->val, &id_src2->reg);  // c
+      rtl_shl(&id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
       print_asm_template3(sll);
@@ -181,13 +181,13 @@ make_EHelper(R_opcode_c){
   }
   case 5: {
     if(decinfo.isa.instr.funct7 == 0x0){  // srl
-      rtl_shr(&id_dest->val, &id_src->val, &id_src2->reg);  // c
+      rtl_shr(&id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
       print_asm_template3(srl);
     }
     else if(decinfo.isa.instr.funct7 == 0x2){ // sra
-      rtl_sar(&id_dest->val, &id_src->val, &id_src2->reg);  // c
+      rtl_sar(&id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
       print_asm_template3(sra);

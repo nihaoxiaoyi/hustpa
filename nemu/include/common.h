@@ -1,7 +1,7 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-// #define DEBUG
+// #define DEBUG            // if you want to DEBUG, please start Uncomment
 //#define DIFF_TEST
 
 #if _SHARE

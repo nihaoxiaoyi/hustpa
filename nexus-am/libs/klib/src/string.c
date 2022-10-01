@@ -8,15 +8,15 @@
 size_t strlen(const char *s) {
   assert(s!=NULL);
   size_t len = 0;
-  while ( s[len++] != '\0' );
-  return len-1;
+  while ( s[len] != '\0' ) len++;
+  return len;
 }
 
 char *strcpy(char* dst, const char* src) {
   assert(dst!=NULL && src!=NULL);
   size_t i = 0;
-  while (src[i]!='\0') {
-    dst[i]=src[i];
+  while (src[i] != '\0') {
+    dst[i] = src[i];
     i++;
   }
   dst[i] = '\0';
@@ -25,9 +25,10 @@ char *strcpy(char* dst, const char* src) {
 
 char* strncpy(char* dst, const char* src, size_t n) {
   assert(dst!=NULL && src!=NULL);
-  size_t i;
-  for (i = 0; i < n && src[i] != '\0'; i++){
+  size_t i = 0;
+  while (i < n && src[i] != '\0'){
     dst[i] = src[i];
+    i++;
   }
   dst[i] = '\0';
   return dst;
@@ -36,9 +37,10 @@ char* strncpy(char* dst, const char* src, size_t n) {
 char* strcat(char* dst, const char* src) {
   assert(dst!=NULL && src!=NULL);
   size_t dst_len = strlen(dst);
-  size_t i;
-  for (i = 0 ; src[i] != '\0' ; i++){
+  size_t i = 0;
+  while (src[i] != '\0'){
     dst[dst_len + i] = src[i];
+    i++;
   }
   dst[dst_len + i] = '\0';
   return dst;
@@ -47,37 +49,28 @@ char* strcat(char* dst, const char* src) {
 int strcmp(const char* s1, const char* s2) {
   assert(s1!=NULL && s2!=NULL);
   size_t i = 0;
-  while (s1[i] && s2[i] && s1[i]==s2[i]){
+  while (s1[i]==s2[i]){
+    if(s1[i] == '\0'){
+      return 0;
+    }
     i++;
   }
   int ret = s1[i]-s2[i];
-  if( ret > 0){
-    ret = 1;
-  }
-  else if(ret < 0){
-    ret = -1;
-  }
-  return ret;
+  return ret>0 ? 1 : -1;
 }
 
 int strncmp(const char* s1, const char* s2, size_t n) {
   assert(s1!=NULL && s2!=NULL);
   if(n < 1) return 0;
   size_t i = 0;
-  while (i<n && s1[i] && s2[i] && s1[i]==s2[i]){
+  while (i<n && s1[i]==s2[i]){
+    if(s1[i] == '\0' || i == n-1){
+      return 0;
+    }
     i++;
   }
-  int ret = 0;
-  if(i != n){
-    ret = s1[i]-s2[i];
-    if( ret > 0){
-      ret = 1;
-    }
-    else if(ret < 0){
-      ret = -1;
-    }
-  }
-  return ret;
+  int ret = s1[i]-s2[i];
+  return ret>0 ? 1 : -1;
 }
 
 void* memset(void* v,int c,size_t n) {
@@ -104,11 +97,14 @@ int memcmp(const void* s1, const void* s2, size_t n){
   if(n < 1) return 0;
   char* p = (char *)s1;
   char* q = (char *)s2;
-  while (*p && *q && n-->0){
+  while (n-->0 && *p==*q){
+    if(n == 0){
+      return 0;
+    }
     p++;
     q++; 
   }
-  return *p - *q;
+  return (*p-*q)>0 ? 1 : -1;
 }
 
 /* End */

@@ -12,7 +12,7 @@ size_t strlen(const char *s) {
   return len-1;
 }
 
-char *strcpy(char* dst,const char* src) {
+char *strcpy(char* dst, const char* src) {
   assert(dst!=NULL && src!=NULL);
   size_t i = 0;
   while (src[i]!='\0') {
@@ -29,9 +29,7 @@ char* strncpy(char* dst, const char* src, size_t n) {
   for (i = 0; i < n && src[i] != '\0'; i++){
     dst[i] = src[i];
   }
-  while (i < n){
-    dst[i++] = '\0';
-  }
+  dst[i] = '\0';
   return dst;
 }
 
@@ -52,7 +50,14 @@ int strcmp(const char* s1, const char* s2) {
   while (s1[i] && s2[i] && s1[i]==s2[i]){
     i++;
   }
-  return s1[i]-s2[i];
+  int ret = s1[i]-s2[i];
+  if( ret > 0){
+    ret = 1;
+  }
+  else if(ret < 0){
+    ret = -1;
+  }
+  return ret;
 }
 
 int strncmp(const char* s1, const char* s2, size_t n) {
@@ -62,7 +67,17 @@ int strncmp(const char* s1, const char* s2, size_t n) {
   while (i<n && s1[i] && s2[i] && s1[i]==s2[i]){
     i++;
   }
-  return s1[i]-s2[i];
+  int ret = 0;
+  if(i != n){
+    ret = s1[i]-s2[i];
+    if( ret > 0){
+      ret = 1;
+    }
+    else if(ret < 0){
+      ret = -1;
+    }
+  }
+  return ret;
 }
 
 void* memset(void* v,int c,size_t n) {

@@ -17,8 +17,8 @@ size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {
       uptime->lo = 0;
       /* Start */
 
-      // cur_time = inl(RTC_ADDR);
-      // uptime->lo = cur_time - start_time;
+      cur_time = inl(RTC_ADDR);
+      uptime->lo = cur_time - start_time;
 
       /* End */
       return sizeof(_DEV_TIMER_UPTIME_t);
@@ -42,7 +42,7 @@ void __am_timer_init() {
 
   // inl : nexus-am/am/include/riscv32.h (to load value of addr)
   // RTC_ADDR : nexus-am/am/include/nemu.h ( RTC_ADDR = 0xa1000048 )
-  // start_time = inl(RTC_ADDR);
+  start_time = inl(RTC_ADDR);
   
   /* End */
 }

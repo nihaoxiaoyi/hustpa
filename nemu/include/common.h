@@ -31,7 +31,7 @@ typedef uint16_t ioaddr_t;
 
 /* my diff test */
 /* Start */
-#define DIFF_TEST   // dinfined the DIFF_TEST macro to start DIFF_TEST
+// #define DIFF_TEST   // dinfined the DIFF_TEST macro to start DIFF_TEST
 /* End */
 
 #include "debug.h"

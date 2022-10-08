@@ -6,9 +6,9 @@ _Context* do_syscall(_Context *c) {
   a[0] = c->GPR1;
   /* Start */
  
-  a[1] = c->GPR2;
-  a[2] = c->GPR3;
-  a[3] = c->GPR4;
+  // a[1] = c->GPR2;
+  // a[2] = c->GPR3;
+  // a[3] = c->GPR4;
 
   // int ret = 0;
  

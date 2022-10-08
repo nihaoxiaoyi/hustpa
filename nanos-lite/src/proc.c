@@ -25,7 +25,11 @@ void init_proc() {
   Log("Initializing processes...");
 
   // load program here
+  /* Start */
 
+  naive_uload(NULL, NULL);  // NULL "bin/bal"
+
+  /* End */
 }
 
 _Context* schedule(_Context *prev) {

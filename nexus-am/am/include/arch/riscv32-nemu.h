@@ -10,10 +10,15 @@ struct _Context {
 
 /* Start */
 
-#define GPR2 gpr[10]
-#define GPR3 gpr[11]
-#define GPR4 gpr[12]
-#define GPRx gpr[10]
+// #define GPR2 gpr[10]
+// #define GPR3 gpr[11]
+// #define GPR4 gpr[12]
+// #define GPRx gpr[10]
+
+#define GPR2 gpr[0]
+#define GPR3 gpr[0]
+#define GPR4 gpr[0]
+#define GPRx gpr[0]
 
 /* End */
 

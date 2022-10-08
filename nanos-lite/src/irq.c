@@ -23,8 +23,7 @@ static _Context* do_event(_Event e, _Context* c) {
     default: panic("Unhandled event ID = %d", e.event);
   }
 
-  // return NULL;
-  return c;
+  return NULL;
 }
 
 void init_irq(void) {

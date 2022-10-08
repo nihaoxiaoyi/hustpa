@@ -15,7 +15,7 @@ make_EHelper(system){
       if(decinfo.isa.instr.simm11_0 == 0x0){ //ecall
         raise_intr(reg_l(17), cpu.pc);
         }
-      else if(decinfo.isa.instr.simm11_0 == 0x2){ //sret
+      else if(decinfo.isa.instr.simm11_0 == 0x102){ //sret
         rtl_j(cpu.sepc+4);
         }
       break;

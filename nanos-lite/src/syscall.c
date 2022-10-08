@@ -10,7 +10,7 @@ _Context* do_syscall(_Context *c) {
   a[2] = c->GPR3;
   a[3] = c->GPR4;
 
-  int ret = 0;
+  // int ret = 0;
  
   /* End */
 

@@ -11,7 +11,14 @@ typedef struct {
   } gpr[32];
 
   vaddr_t pc;
+  /* Start */
 
+  rtlreg_t sepc;    // Store the PC that triggered the exception
+  rtlreg_t sstatus; // Store processor status
+  rtlreg_t scause;  // Storing the causes of triggering exceptions
+  rtlreg_t stvec;   // Store abnormal entry address
+
+  /* End */
 } CPU_state;
 
 static inline int check_reg_index(int index) {

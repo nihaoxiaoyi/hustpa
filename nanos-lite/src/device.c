@@ -57,9 +57,7 @@ static char dispinfo[128] __attribute__((used)) = {};
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   /* Start */
   
-  len = len >0 ? len : 0;
-  strncpy((char*)buf, (const char*)(dispinfo+offset), len);
-  return len;
+  return sprintf(buf, dispinfo+offset);
 
   /* End */
 }

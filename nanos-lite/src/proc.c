@@ -8,7 +8,7 @@ PCB *current = NULL;
 
 /* Start */
 
-uintptr_t loader(PCB *pcb, const char *filename);
+extern uintptr_t loader(PCB *pcb, const char *filename);
 
 /* End */
 

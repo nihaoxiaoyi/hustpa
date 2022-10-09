@@ -6,6 +6,12 @@ static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
 PCB *current = NULL;
 
+/* Start */
+
+uintptr_t loader(PCB *pcb, const char *filename);
+
+/* End */
+
 void switch_boot_pcb() {
   current = &pcb_boot;
 }

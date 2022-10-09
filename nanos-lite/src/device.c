@@ -1,8 +1,21 @@
 #include "common.h"
 #include <amdev.h>
+/* Start */
+
+#include<klib.h>
+
+/* End*/
 
 size_t serial_write(const void *buf, size_t offset, size_t len) {
-  return 0;
+  /* Start */
+
+  len = len>0 ? len : 0;
+  for(int i=0; i<len; i++) {
+    _putc(((char *)buf)[i]);
+  }
+  return len;
+
+  /* End */
 }
 
 #define NAME(key) \
@@ -13,22 +26,62 @@ static const char *keyname[256] __attribute__((used)) = {
   _KEYS(NAME)
 };
 
+/* Start */
+
+#define KEYDOWN_MASK 0x8000
+
+/* End */
+
 size_t events_read(void *buf, size_t offset, size_t len) {
-  return 0;
+  /* Start */
+  
+  int key = read_key();
+  bool down = false;
+  if( key & KEYDOWN_MASK ){
+    key ^= 0x8000;
+    down = true;
+  }
+  if(key){
+    len = sprintf(buf,"%s %s\n", down ?"kd":"ku", keyname[key]);
+  }
+  else{
+    len = sprintf(buf,"t %d\n", uptime());
+  }
+  return len;
+
+  /* End */
 }
 
 static char dispinfo[128] __attribute__((used)) = {};
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
-  return 0;
+  /* Start */
+  
+  len = len >0 ? len : 0;
+  strncpy((char*)buf, (const char*)(dispinfo+offset), len);
+  return len;
+
+  /* End */
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  return 0;
+  /* Start */
+  
+  int x = (offset/4) % screen_width();
+  int y = (offset/4) / screen_width();
+  draw_rect((uint32_t*)buf, x, y, len / 4, 1);
+  return len;
+
+  /* End */
 }
 
 size_t fbsync_write(const void *buf, size_t offset, size_t len) {
-  return 0;
+  /* Start */
+  
+  draw_sync();
+  return len;
+
+  /* End */
 }
 
 void init_device() {
@@ -39,7 +92,7 @@ void init_device() {
   // described in the Navy-apps convention
   /* Start */
 
-  sprintf(dispinfo, "WIDTH:%d\n HEIGHT:%d\n", screen_width(), screen_height() );
+  sprintf(dispinfo, "WIDTH:%d\nHEIGHT:%d\n", screen_width(), screen_height() );
 
   /* End */
 }

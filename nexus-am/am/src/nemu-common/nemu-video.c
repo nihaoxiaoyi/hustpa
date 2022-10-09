@@ -2,11 +2,10 @@
 #include <amdev.h>
 #include <nemu.h>
 
-/* my external function*/
 /* Start */
-void draw_sync();
-int screen_width();
-int screen_height();
+
+#include<klib.h>
+
 /* End */
 
 size_t __am_video_read(uintptr_t reg, void *buf, size_t size) {

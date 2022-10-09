@@ -5,8 +5,10 @@ typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
 
 /* Start */
 
+// in ramdisk.c
 extern size_t ramdisk_read(void*, size_t, size_t);
 extern size_t ramdisk_write(const void*, size_t, size_t);
+// in device.c
 size_t events_read(void *buf, size_t offset, size_t len);
 size_t dispinfo_read(void *buf, size_t offset, size_t len);
 size_t fb_write(const void *buf, size_t offset, size_t len);

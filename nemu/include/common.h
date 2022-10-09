@@ -2,7 +2,7 @@
 #define __COMMON_H__
 
 // #define DEBUG            // if you want to DEBUG, please start Uncomment
-//#define DIFF_TEST
+// #define DIFF_TEST           
 
 #if _SHARE
 // do not enable these features while building a reference design
@@ -32,9 +32,9 @@ typedef uint16_t ioaddr_t;
 /* my diff test */
 /* Start */
 
-// #define DIFF_TEST   // dinfined the DIFF_TEST macro to start DIFF_TEST
-
-#define HAS_IOE        // to start device
+#define DIFF_TEST       // dinfined the DIFF_TEST macro to start DIFF_TEST
+// #define DEBUG           // if you want to DEBUG, please start Uncomment
+#define HAS_IOE         // to start device
 
 /* End */
 

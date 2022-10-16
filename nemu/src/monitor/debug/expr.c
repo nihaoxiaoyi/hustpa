@@ -322,7 +322,7 @@ uint32_t eval(int p, int q, bool *success){
         case '/': {
           if(val2!=0){
             num = val1/val2;
-            printf("%d %d\n",val1,val2);
+            printf("%u %u\n",val1,val2);
           } 
           else{
             *success = false;

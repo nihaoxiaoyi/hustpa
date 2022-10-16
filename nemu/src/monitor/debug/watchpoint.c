@@ -52,10 +52,8 @@ WP* free_wp(int NO){
     if(p->NO == NO){
       pre->next = p->next;
       p->next = free_;
-      free_->next = p;
-      if(wp_head.next==NULL){
-        head = NULL;
-      }
+      free_ = p;
+      head = wp_head.next;
       return p;
     }
     pre = p;

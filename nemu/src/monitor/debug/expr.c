@@ -323,7 +323,9 @@ uint32_t eval(int p, int q, bool *success){
           if(val2!=0){
             num = val1/val2;
           } 
-          *success = false;
+          else{
+            *success = false;
+          }
           break;
         }
         case '+': num = val1+val2; break;

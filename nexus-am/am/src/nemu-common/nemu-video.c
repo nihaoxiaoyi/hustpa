@@ -2,7 +2,6 @@
 #include <amdev.h>
 #include <nemu.h>
 
-/* my external function*/
 /* Start */
 void draw_sync();
 int screen_width();
@@ -64,7 +63,7 @@ void __am_vga_init() {
   int i;
   int size = screen_width() * screen_height();
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  for (i = 0; i < size; i ++) fb[i] = i;
+  for (i = 0; i < size; i ++) fb[i] = 0;
   draw_sync();
 
   /* End */

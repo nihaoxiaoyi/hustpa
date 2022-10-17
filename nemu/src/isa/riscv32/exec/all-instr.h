@@ -26,6 +26,6 @@ make_EHelper(lh);
 make_EHelper(lb);
 
 // system.c
-// make_EHelper(sys);
+make_EHelper(system);
 
 /* End */

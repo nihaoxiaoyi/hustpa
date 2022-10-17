@@ -38,6 +38,12 @@
 #error syscall is not supported
 #endif
 
+/* Start */
+
+extern char _end;
+
+/* End */
+
 intptr_t _syscall_(intptr_t type, intptr_t a0, intptr_t a1, intptr_t a2) {
   register intptr_t _gpr1 asm (GPR1) = type;
   register intptr_t _gpr2 asm (GPR2) = a0;
@@ -54,37 +60,65 @@ void _exit(int status) {
 }
 
 int _open(const char *path, int flags, mode_t mode) {
-  _exit(SYS_open);
-  return 0;
+  /* Start */
+
+  return (int)_syscall_(SYS_open, (uintptr_t)path, flags, mode);
+
+  /* End */
 }
 
 int _write(int fd, void *buf, size_t count) {
-  _exit(SYS_write);
-  return 0;
+  /* Start */
+
+  return (int)_syscall_(SYS_write, fd, (intptr_t)buf, count);
+
+  /* End */
 }
 
 void *_sbrk(intptr_t increment) {
+  /* Start */
+
+  static void* program_break = (uintptr_t)&_end;
+  void* old = program_break;
+  if(_syscall_(SYS_brk, (uintptr_t)program_break + increment, 0, 0) == 0){
+    program_break = program_break + increment;
+    return (void*) old;
+  }
   return (void *)-1;
+
+  /* End */
 }
 
 int _read(int fd, void *buf, size_t count) {
-  _exit(SYS_read);
-  return 0;
+  /* Start */
+
+  return (int)_syscall_(SYS_read, fd, (uintptr_t)buf, count);
+
+  /* End */
 }
 
 int _close(int fd) {
-  _exit(SYS_close);
-  return 0;
+  /* Start */
+
+  return (int)_syscall_(SYS_close, fd, 0, 0);
+
+  /* End */
 }
 
 off_t _lseek(int fd, off_t offset, int whence) {
-  _exit(SYS_lseek);
-  return 0;
+   /* Start */
+
+  return (off_t)_syscall_(SYS_lseek, fd, offset, whence);
+
+  /* End */
 }
 
 int _execve(const char *fname, char * const argv[], char *const envp[]) {
-  _exit(SYS_execve);
-  return 0;
+  /* Start */
+
+  return _syscall_(SYS_execve, fname, (intptr_t)argv, (intptr_t)envp);
+
+  /* End */
 }
 
 // The code below is not used by Nanos-lite.

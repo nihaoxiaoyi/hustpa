@@ -31,7 +31,7 @@ _Context* do_syscall(_Context *c) {
     /* Start */
     
     case SYS_yield : _yield(); break;
-    case SYS_exit  : naive_uload(NULL, "bin/init"); break;
+    case SYS_exit  : naive_uload(NULL, "/bin/init"); break;
     case SYS_write : ret = fs_write(a[1],(void*)a[2],a[3]); break;
     case SYS_read  : ret = fs_read(a[1],(void*)a[2],a[3]); break;
     case SYS_open  : ret = fs_open((char*)a[1],a[2],a[3]); break;

@@ -38,7 +38,7 @@ _Context* do_syscall(_Context *c) {
     case SYS_close : ret = fs_close(a[1]); break;
     case SYS_lseek : ret = fs_lseek(a[1],a[2],a[3]); break;
     case SYS_brk   : break;
-    case SYS_execve: naive_uload(NULL, a[1]); break;
+    case SYS_execve: naive_uload(NULL, (const char*)a[1]); break;
     
     /* End */
     default: panic("Unhandled syscall ID = %d", a[0]);

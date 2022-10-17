@@ -1,10 +1,5 @@
 #include "common.h"
 #include <amdev.h>
-/* Start */
-
-// #include<klib.h>
-
-/* End*/
 
 size_t serial_write(const void *buf, size_t offset, size_t len) {
   /* Start */
@@ -67,7 +62,6 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   
   int x = (offset/4) % screen_width();
   int y = (offset/4) / screen_width();
-  // draw_sync();
   draw_rect((uint32_t*)buf, x, y, len / 4, 1);
   return len;
 

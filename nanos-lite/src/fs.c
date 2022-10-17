@@ -13,6 +13,7 @@ size_t events_read(void *buf, size_t offset, size_t len);
 size_t dispinfo_read(void *buf, size_t offset, size_t len);
 size_t fb_write(const void *buf, size_t offset, size_t len);
 size_t fbsync_write(const void *buf, size_t offset, size_t len);
+size_t serial_write(const void *buf, size_t offser, size_t len);
 
 /* End */
 
@@ -52,7 +53,7 @@ static Finfo file_table[] __attribute__((used)) = {
   {"/dev/events"   , 0  , 0, 0, (ReadFn)events_read  , (WriteFn)invalid_write},
   {"/dev/fbsync"   , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)fbsync_write },
   {"/proc/dispinfo", 128, 0, 0, (ReadFn)dispinfo_read, (WriteFn)invalid_write},
-  {"/dev/tty"      , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)invalid_write},
+  {"/dev/tty"      , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)serial_write},
 
   /* End */
 #include "files.h"

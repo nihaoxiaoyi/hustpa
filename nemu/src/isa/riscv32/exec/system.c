@@ -5,6 +5,8 @@
 
 void raise_intr(uint32_t NO, vaddr_t epc);
 
+#define REG_A7 17
+
 enum {
     SSTATUS=0x100, STVEC=0x105, SEPC=0x141, SCAUSE=0x142
     };
@@ -13,10 +15,14 @@ make_EHelper(system){
     switch (decinfo.isa.instr.funct3){
     case 0: {
       if(decinfo.isa.instr.simm11_0 == 0x0){ //ecall
-        raise_intr(reg_l(17), cpu.pc);
+        raise_intr(reg_l(REG_A7), cpu.pc);
+
+        print_asm_template1(ecall);
         }
       else if(decinfo.isa.instr.simm11_0 == 0x102){ //sret
         rtl_j(cpu.sepc+4);
+        
+        print_asm_template1(sret);
         }
       break;
       }

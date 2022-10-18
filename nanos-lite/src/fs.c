@@ -47,8 +47,8 @@ static Finfo file_table[] __attribute__((used)) = {
   /* Start */
   
   {"stdin"         , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)invalid_write},
-  {"stdout"        , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)serial_write},
-  {"stderr"        , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)serial_write},
+  {"stdout"        , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)invalid_write},
+  {"stderr"        , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)invalid_write},
   {"/dev/fb"       , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)fb_write     },
   {"/dev/events"   , 0  , 0, 0, (ReadFn)events_read  , (WriteFn)invalid_write},
   {"/dev/fbsync"   , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)fbsync_write },

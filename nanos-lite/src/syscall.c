@@ -45,7 +45,7 @@ _Context* do_syscall(_Context *c) {
   }
   /* Start */
 
-  c->GPRx = ret;
+  // c->GPRx = ret;
 
   /* End */
   return NULL;

@@ -33,7 +33,7 @@ void init_proc() {
   // load program here
   /* Start */
 
-  naive_uload(NULL, "/bin/init");
+  // naive_uload(NULL, "/bin/init");
 
   /* End */
 }

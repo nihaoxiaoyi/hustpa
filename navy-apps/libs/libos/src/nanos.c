@@ -41,7 +41,7 @@
 /* Start */
 
 extern char _end;
-// int _halt(int );
+extern int _halt(int );
 
 /* End */
 
@@ -58,7 +58,7 @@ intptr_t _syscall_(intptr_t type, intptr_t a0, intptr_t a1, intptr_t a2) {
 void _exit(int status) {
   _syscall_(SYS_exit, status, 0, 0);
   // while (1);
-  // _halt(status);
+  _halt(status);
 }
 
 int _open(const char *path, int flags, mode_t mode) {

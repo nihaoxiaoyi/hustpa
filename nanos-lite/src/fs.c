@@ -30,7 +30,7 @@ typedef struct {
   WriteFn write;
 } Finfo;
 
-enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_FB};
+enum {FD_STDIN, FD_STDOUT, FD_STDERR};
 
 size_t invalid_read(void *buf, size_t offset, size_t len) {
   panic("should not reach here");
@@ -143,8 +143,9 @@ int fs_close(int fd){
 void init_fs() {
   // TODO: initialize the size of /dev/fb
   /* Start */
-
-  file_table[FD_FB].size = screen_width() * screen_height() * 4;
+  
+  int fd = fs_open("/dev/fb", 0, 0);
+  file_table[fd].size = screen_width() * screen_height() * 4;
 
   /* End */
 }

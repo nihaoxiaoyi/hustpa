@@ -47,10 +47,10 @@ static Finfo file_table[] __attribute__((used)) = {
   /* Start */
   
   {"stdin"         , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)invalid_write},
-  {"stdout"        , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)invalid_write},
-  {"stderr"        , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)invalid_write},
+  {"stdout"        , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)serial_write},
+  {"stderr"        , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)serial_write},
   {"/dev/fb"       , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)fb_write     },
-  // {"/dev/events"   , 0  , 0, 0, (ReadFn)events_read  , (WriteFn)invalid_write},
+  {"/dev/events"   , 0  , 0, 0, (ReadFn)events_read  , (WriteFn)invalid_write},
   {"/dev/fbsync"   , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)fbsync_write },
   {"/proc/dispinfo", 128, 0, 0, (ReadFn)dispinfo_read, (WriteFn)invalid_write},
   {"/dev/tty"      , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)serial_write},
@@ -96,10 +96,7 @@ size_t fs_write(int fd, const void *buf, size_t len){
   }
 
   if( fd==1 || fd==2 ){ // stdout stderr
-    int i = 0;
-    while ( i < len ){
-      _putc(((char *)buf)[i++]);
-    }
+    len = file_table[fd].write(buf, 0, len);
     return len;
   }
 

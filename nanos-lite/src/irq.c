@@ -11,7 +11,7 @@ static _Context* do_event(_Event e, _Context* c) {
     /* Start*/
 
     case _EVENT_YIELD: {
-      Log("self trap");
+      Log("self trapping event");
       break;
       }
     case _EVENT_SYSCALL: {

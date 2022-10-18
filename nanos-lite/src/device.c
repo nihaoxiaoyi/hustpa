@@ -38,12 +38,11 @@ size_t events_read(void *buf, size_t offset, size_t len) {
     down = true;
   }
   if(key){
-    printf("\nA\n");
     len = sprintf(buf,"%s %s\n", down ?"kd":"ku", keyname[key]);
   }
-  else{
-    len = sprintf(buf,"t %d\n", uptime());
-  }
+  // else{
+  //   len = sprintf(buf,"t %d\n", uptime());
+  // }
   return len;
 
   /* End */

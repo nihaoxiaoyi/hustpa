@@ -22,7 +22,7 @@ make_EHelper(system){
       else if(decinfo.isa.instr.simm11_0 == 0x102){ //sret
         rtl_j(cpu.sepc+4);
         
-        print_asm_template1(sret);
+        print_asm_template3(sret);
         }
       break;
       }

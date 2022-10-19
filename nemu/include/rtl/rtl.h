@@ -139,7 +139,7 @@ static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // TODO();
   assert( width>=1 && width<=4 );
   width = 32 - width*8;
-  *dest = ( (*src1) << width ) >> width;
+  *dest = ( (int32_t)(*src1) << width ) >> width;
 }
 
 static inline void rtl_setrelopi(uint32_t relop, rtlreg_t *dest, const rtlreg_t *src1, int imm) {

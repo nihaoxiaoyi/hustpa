@@ -23,18 +23,24 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   /* Start */
 
   Elf_Ehdr head;
-  int fd = fs_open(filename, 0, 0);
+  Elf_Phdr elf_tmp;
+  int fd;
+
+  fd = fs_open(filename, 0, 0);
   fs_lseek(fd, 0, SEEK_SET);
   fs_read(fd, &head, sizeof(head));
+
   for(int i = 0; i<head.e_phnum; i++){
-    Elf_Phdr temp;
+    
     fs_lseek(fd, head.e_phoff + i * head.e_phentsize, SEEK_SET);
-    fs_read(fd, &temp, sizeof(temp));
-    if(temp.p_type == PT_LOAD){
-      fs_lseek(fd, temp.p_offset, SEEK_SET);
-      fs_read(fd, (void*)temp.p_vaddr, temp.p_filesz);
-      memset((void*)(temp.p_vaddr+temp.p_filesz), 0, temp.p_memsz-temp.p_filesz);
+    fs_read(fd, &elf_tmp, sizeof(elf_tmp));
+
+    if(elf_tmp.p_type == PT_LOAD){
+      fs_lseek(fd, elf_tmp.p_offset, SEEK_SET);
+      fs_read(fd, (void*)elf_tmp.p_vaddr, elf_tmp.p_filesz);
+      memset((void*)(elf_tmp.p_vaddr+elf_tmp.p_filesz), 0, elf_tmp.p_memsz-elf_tmp.p_filesz);
     }
+    
   }
   return head.e_entry;
 

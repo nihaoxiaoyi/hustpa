@@ -30,7 +30,7 @@ make_EHelper(I_opcode_4){
     break;
   }
   case 1:{  // slli
-    rtl_shl(&id_dest->val, &id_src->val, &id_src2->val);
+    rtl_shl(&id_dest->val, &id_src->val, &id_src2->reg);
     rtl_sr(id_dest->reg, &id_dest->val, 4);
 
     print_asm_template2(slli);
@@ -38,7 +38,8 @@ make_EHelper(I_opcode_4){
     break;
   }
   case 2:{  // slti
-    id_dest->val = (signed)id_src->val < (signed)id_src2->val;
+    // id_dest->val = (signed)id_src->val < (signed)id_src2->val;
+    rtl_setrelop(RELOP_LT, &id_dest->val, &id_src->val, &id_src2->val);
     rtl_sr(id_dest->reg, &id_dest->val, 4);
 
     print_asm_template2(slti);
@@ -46,7 +47,8 @@ make_EHelper(I_opcode_4){
     break;
   }
   case 3:{  // sltiu
-    id_dest->val = (unsigned)id_src->val < (unsigned)id_src2->val;
+    // id_dest->val = (unsigned)id_src->val < (unsigned)id_src2->val;
+    rtl_setrelop(RELOP_LTU, &id_dest->val, &id_src->val, &id_src2->val);
     rtl_sr(id_dest->reg, &id_dest->val, 4);
 
     print_asm_template2(sltiu);
@@ -62,14 +64,14 @@ make_EHelper(I_opcode_4){
     break;
   }
   case 5:{  // srli || srai
-    if(decinfo.isa.instr.funct7 == 0x0){ // srli
-      rtl_shr(&id_dest->val, &id_src->val, &id_src2->val);
+    if(decinfo.isa.instr.funct7 == 0x00){ // srli
+      rtl_shr(&id_dest->val, &id_src->val, &id_src2->reg);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
       print_asm_template2(srli);
     }
-    else{ // srai
-      rtl_sar(&id_dest->val, &id_src->val, &id_src2->val);
+    else if(decinfo.isa.instr.funct7 == 0x20){ // srai
+      rtl_sar(&id_dest->val, &id_src->val, &id_src2->reg);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
       print_asm_template2(srai);
@@ -141,7 +143,8 @@ make_EHelper(R_opcode_c){
   }
   case 2: {
     if(decinfo.isa.instr.funct7 == 0x00){  // slt
-      id_dest->val = (signed)id_src->val < (signed)id_src2->val;
+      // id_dest->val = (signed)id_src->val < (signed)id_src2->val;
+      rtl_setrelop(RELOP_LT, &id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
       print_asm_template3(slt);
@@ -153,7 +156,8 @@ make_EHelper(R_opcode_c){
   }
   case 3: {
     if(decinfo.isa.instr.funct7 == 0x00){  // sltu
-      id_dest->val = (unsigned)id_src->val < (unsigned)id_src2->val;
+      // id_dest->val = (unsigned)id_src->val < (unsigned)id_src2->val;
+      rtl_setrelop(RELOP_LTU, &id_dest->val, &id_src->val, &id_src2->val);
       rtl_sr(id_dest->reg, &id_dest->val, 4);
 
       print_asm_template3(sltu);

@@ -78,11 +78,11 @@ int _write(int fd, void *buf, size_t count) {
 void *_sbrk(intptr_t increment) {
   /* Start */
 
-  static void* program_break = (uintptr_t)&_end;
-  void* old = program_break;
+  static void* program_break = (void*)&_end;
+  void* old_program_break = program_break;
   if(_syscall_(SYS_brk, (uintptr_t)program_break + increment, 0, 0) == 0){
     program_break = program_break + increment;
-    return (void*) old;
+    return (void*) old_program_break;
   }
   return (void *)-1;
 
@@ -116,7 +116,7 @@ off_t _lseek(int fd, off_t offset, int whence) {
 int _execve(const char *fname, char * const argv[], char *const envp[]) {
   /* Start */
 
-  return _syscall_(SYS_execve, fname, (intptr_t)argv, (intptr_t)envp);
+  return _syscall_(SYS_execve, (intptr_t)fname, (intptr_t)argv, (intptr_t)envp);
 
   /* End */
 }

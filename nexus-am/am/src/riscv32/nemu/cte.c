@@ -1,6 +1,33 @@
 #include <am.h>
 #include <riscv32.h>
 
+ /* Start */
+
+enum {
+  SYS_exit,
+  SYS_yield,
+  SYS_open,
+  SYS_read,
+  SYS_write,
+  SYS_kill,
+  SYS_getpid,
+  SYS_close,
+  SYS_lseek,
+  SYS_brk,
+  SYS_fstat,
+  SYS_time,
+  SYS_signal,
+  SYS_execve,
+  SYS_fork,
+  SYS_link,
+  SYS_unlink,
+  SYS_wait,
+  SYS_times,
+  SYS_gettimeofday
+};
+
+ /* End */
+
 static _Context* (*user_handler)(_Event, _Context*) = NULL;
 
 _Context* __am_irq_handle(_Context *c) {
@@ -11,15 +38,15 @@ _Context* __am_irq_handle(_Context *c) {
       /* Start */
 
       case -1: ev.event = _EVENT_YIELD; break;
-      case 0:
-      case 1:
-      case 2:
-      case 3:
-      case 4:
-      case 7:
-      case 8:
-      case 9:
-      case 13: ev.event = _EVENT_SYSCALL; break;
+      case SYS_exit:
+      case SYS_yield:
+      case SYS_open:
+      case SYS_read:
+      case SYS_write:
+      case SYS_close:
+      case SYS_lseek:
+      case SYS_brk:
+      case SYS_execve: ev.event = _EVENT_SYSCALL; break;
 
       /* End */
       default: ev.event = _EVENT_ERROR; break;

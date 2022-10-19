@@ -30,7 +30,7 @@ typedef struct {
   WriteFn write;
 } Finfo;
 
-enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_FB};
+enum {FD_STDIN, FD_STDOUT, FD_STDERR};
 
 size_t invalid_read(void *buf, size_t offset, size_t len) {
   panic("should not reach here");
@@ -47,8 +47,8 @@ static Finfo file_table[] __attribute__((used)) = {
   /* Start */
   
   {"stdin"         , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)invalid_write},
-  {"stdout"        , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)invalid_write},
-  {"stderr"        , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)invalid_write},
+  {"stdout"        , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)serial_write},
+  {"stderr"        , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)serial_write},
   {"/dev/fb"       , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)fb_write     },
   {"/dev/events"   , 0  , 0, 0, (ReadFn)events_read  , (WriteFn)invalid_write},
   {"/dev/fbsync"   , 0  , 0, 0, (ReadFn)invalid_read , (WriteFn)fbsync_write },
@@ -77,7 +77,7 @@ int fs_open(const char *pathname, int flags, int mode){
 size_t fs_read(int fd, void *buf, size_t len){
   if(file_table[fd].open_offset+len >= file_table[fd].size) {
     size_t value = file_table[fd].size - file_table[fd].open_offset;
-    len = value >0 ? value : 0;
+    len = value > 0 ? value : 0;
   }
   if(file_table[fd].read == NULL) {
     len = ramdisk_read(buf, file_table[fd].disk_offset+file_table[fd].open_offset, len);
@@ -96,15 +96,13 @@ size_t fs_write(int fd, const void *buf, size_t len){
   }
 
   if( fd==1 || fd==2 ){ // stdout stderr
-    int i = 0;
-    while ( i < len ){
-      _putc(((char *)buf)[i++]);
-    }
+    len = file_table[fd].write(buf, 0, len);
     return len;
   }
 
   if(file_table[fd].open_offset+len >= file_table[fd].size){
-    len = file_table[fd].size - file_table[fd].open_offset;
+    size_t value  = file_table[fd].size - file_table[fd].open_offset;
+    len = value > 0 ? value : 0;
   }
   
   if(file_table[fd].write == NULL){
@@ -145,8 +143,9 @@ int fs_close(int fd){
 void init_fs() {
   // TODO: initialize the size of /dev/fb
   /* Start */
-
-  file_table[FD_FB].size = screen_width() * screen_height() * 4;
+  
+  int fd = fs_open("/dev/fb", 0, 0);
+  file_table[fd].size = screen_width() * screen_height() * 4;
 
   /* End */
 }

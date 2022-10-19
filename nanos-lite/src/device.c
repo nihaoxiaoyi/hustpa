@@ -1,5 +1,6 @@
 #include "common.h"
 #include <amdev.h>
+#include <stdio.h>
 
 size_t serial_write(const void *buf, size_t offset, size_t len) {
   /* Start */
@@ -40,7 +41,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
     len = sprintf(buf,"%s %s\n", down ?"kd":"ku", keyname[key]);
   }
   else{
-    len = sprintf(buf,"t %d\n", uptime());
+    len = sprintf(buf,"t %d\n", (int)uptime());
   }
   return len;
 
@@ -51,7 +52,7 @@ static char dispinfo[128] __attribute__((used)) = {};
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   /* Start */
-  
+
   return sprintf(buf, dispinfo+offset);
 
   /* End */

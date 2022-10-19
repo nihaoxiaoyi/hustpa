@@ -137,9 +137,9 @@ static inline void rtl_not(rtlreg_t *dest, const rtlreg_t* src1) {
 static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- signext(src1[(width * 8 - 1) .. 0])
   // TODO();
-  int32_t num = *src1;
-  width = width<<3;
-  *dest = (num<<width)>>width;
+  assert( width>=1 && width<=4 );
+  width = 32 - width*8;
+  *dest = ( (*src1) << width ) >> width;
 }
 
 static inline void rtl_setrelopi(uint32_t relop, rtlreg_t *dest, const rtlreg_t *src1, int imm) {
@@ -150,21 +150,13 @@ static inline void rtl_setrelopi(uint32_t relop, rtlreg_t *dest, const rtlreg_t 
 static inline void rtl_msb(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- src1[width * 8 - 1]
   // TODO();
-  uint32_t w = width*8-1;
-  uint32_t num = 1;
-  num = num<<w;
-  *dest = ((*src1)&num)>>w;
+  *dest = *src1 >> (width * 8 - 1) & 0x1;
 }
 
 static inline void rtl_mux(rtlreg_t* dest, const rtlreg_t* cond, const rtlreg_t* src1, const rtlreg_t* src2) {
   // dest <- (cond ? src1 : src2)
   // TODO();
-  if(*cond){
-    *dest = *src1;
-  }
-  else{
-    *dest = *src2;
-  }
+  *dest = (*cond) ? (*src1) : (*src2);
   
 }
 
